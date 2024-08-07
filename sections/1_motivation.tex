@@ -1,4 +1,17 @@
 \section{Motivation}
 \label{sec:motivation}
 
-Description of the scientific context (including the classification in the literature, projects, ...) and of the concrete embedding.
+Implementations of traditional database management systems are often designed for systems and
+architectures where I/O dominates performance. Therefore, these systems do not make advantage of modern
+hardware trends and architectures. Modern processors offer mutli-core architectures with high CPU counts,
+advanced instruction sets, vector operations (SIMD) supporting up to 512 bits (e.g. AVX512) with trends going even higher.
+Todays in-memory database systems are no longer I/O bound, and therfore need high intra-operator parallelism to take 
+advantage of the multi core architecture and should use SIMD instructions if applicable. Other points: Cache locality, NUMA awareness, Data-Parallelism, Thread-Parallelism. 
+
+The Join-operator is one of the elemenal operatos of a database system. In the recent years there has been
+a debate about the performance difference between the Sort-Merge Join and Hash Join. \cite{10.14778/1687553.1687564}
+projected that Sort-Merge Join would start to perform better than Hash Join for lower tuple counts with 256 bit SIMD registers and would outperform
+hash based alternatives with a factor of 1.35 – 1.65 with 512 bits.
+
+% Description of the scientific context (including the classification in the literature, projects, ...) and of the concrete embedding.
+
