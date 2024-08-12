@@ -1,4 +1,32 @@
 \section{Goal of Thesis}
 \label{sec:goal}
 
-Description of the concrete problems addressed as the goals of the thesis, planned/expected results, reference to other thesis, paper, etc., if any.
+% Description of the concrete problems addressed as the goals of the thesis, planned/expected results, reference to other thesis, paper, etc., if any.
+
+This thesis aims to efficiently implement the sort-merge join algorithm,
+explicitly optimized for specific architectures and hardware components. While multiple papers
+exist about modern implementation approaches for sort-merge joins in in-memory database systems
+and SIMD sorting generally, only some have public implementations. Most SIMD sorting algorithms
+presented in the literature are not directly applicable to join operations as they usually use
+sorting keys of only 32 bits. We must track the row ID (rid) corresponding to the search key for
+a join. The current implementations of sort-merge join in literature use SSE and AVX2 intrinsics,
+but to our knowledge, there has yet to be an implementation using AVX512. Therefore, in the scope
+of this thesis, we want to integrate modern AVX512 sorting algorithms, beside SSE and AVX2 ones, into a complete sort-merge
+join operator. It would also be of value to see how new and existing approaches transfer to other
+CPU architectures like Arm with its Scalable Vector Extension (SVE). While some public implementations
+exist for modern and optimized sort-merge join, they have usually isolated implementations with a strong
+focus on the sorting step using randomly chosen input data, often already in the required data format. 
+Also, they often skip the lookup of matching rows and the construction of the joined table.
+Hence, in this thesis, we want to integrate our implementation of the sort-merge join into Hyrise,
+a complete in-memory database. Hyrise contains both a radix-based Hash-Join and sort-merge join.
+The sort-merge join uses radix cluster sorting, which uses pattern-defeating quicksort (boost)
+but no explicit SIMD instructions. It fundamentally differs from the modern approaches in the literature.
+These differences allow us to test our implementation against the existing sort-merge and hash-based join.
+Complete integration into an in-memory database allows us to benchmark sorting throughput in
+tuples per second and see how our sort-merge join operator compares to other join implementations
+in decision support benchmarks like TCP-H or TCP-DS with more realistic data. Benchmarking should
+also include measuring the other steps besides the sorting, like the initial data construction in
+the format of (key, rid) from the input relations or the final construction of the joined table.
+We want to test our implementation on different architectures and hardware, taking advantage of
+differences in core count, cache size, SIMD registers with different widths, NUMA regions, 
+and other hardware-specific properties.

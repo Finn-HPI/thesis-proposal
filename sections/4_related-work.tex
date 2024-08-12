@@ -6,3 +6,9 @@ Description of related work in literature or other projects (theses, master proj
 \cite{Balkesen}
 \cite{10.14778/1687553.1687564}
 \cite{10.14778/1454159.1454171}
+
+There are many papers about SIMD Sorting.
+In \cite{Watkins} a new way of sorting with AVX512 is proposed, based on Merge Path \cite{MergePath}, which
+is over 5x faster than a quicksort and 2x faster than Intel's IPP library sort. They assume 32-bit data, so they can
+fit 16 elements in one SIMD register. In comparison for a Sort-Merge Join we would at least need a 64-bit for each
+entry assuming tuples (key, rowId) with key and rowId being 32-bit. Therefore, we can only fit 8 instead of 16 values.  
