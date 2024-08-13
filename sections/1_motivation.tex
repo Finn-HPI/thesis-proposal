@@ -1,17 +1,26 @@
 \section{Motivation}
 \label{sec:motivation}
 
-Implementations of traditional database management systems are often designed for systems and
-architectures where I/O dominates performance. Therefore, these systems do not make advantage of modern
-hardware trends and architectures. Modern processors offer mutli-core architectures with high CPU counts,
-advanced instruction sets, vector operations (SIMD) supporting up to 512 bits (e.g. AVX512) with trends going even higher.
-Todays in-memory database systems are no longer I/O bound, and therfore need high intra-operator parallelism to take 
-advantage of the multi core architecture and should use SIMD instructions if applicable. Other points: Cache locality, NUMA awareness, Data-Parallelism, Thread-Parallelism. 
-
-The Join-operator is one of the elemenal operatos of a database system. In the recent years there has been
-a debate about the performance difference between the Sort-Merge Join and Hash Join. \cite{10.14778/1687553.1687564}
-projected that Sort-Merge Join would start to perform better than Hash Join for lower tuple counts with 256 bit SIMD registers and would outperform
-hash based alternatives with a factor of 1.35 – 1.65 with 512 bits.
+Traditional database systems have historically been designed for systems and architectures where
+I/O dominates performance. However, modern processors with multi-core architectures, advanced 
+instruction sets, and other hardware accelerants like vector operations (SIMD) have significantly 
+altered this landscape. Today's in-memory database systems are no longer I/O bound and, therefore,
+need high intra-operator parallelism to fully utilize the multi-core architecture. To achieve
+maximum performance, cache locality, NUMA awareness, and using SIMD instructions for higher data
+parallelism should be considered.
+The join operator is a fundamental component of every database system.
+In recent years, the difference in performance between the sort-merge and radix-hash join has been
+the subject of ongoing debate. Kim et al. \cite{10.14778/1687553.1687564} projected that Sort-Merge Join would outperform hash-based
+alternatives with a factor of $1.35$ – $1.65$ with 512 bits, particularly for lower tuple counts with
+256-bit SIMD registers. Albutiu et al. \cite{MPSM} reinforced this claim with recent results reporting that
+their NUMA-aware implementation of sort-merge join is superior to that of hash joins (without
+leveraging SIMD). Balkesen et al. \cite{Balkesen} experimentally show contradicting results by implementing 
+optimized versions for sort-merge and radix-hash join, showing that their implementation of
+radix-hash join is still superior. They use AVX2 in their implementation, allowing further
+work to explore wider SIMD registers (e.g., AVX512). With only very few public implementations,
+which are often experimental, there is still great value in an open-source, state-of-the-art 
+sort-merge join implementation optimized for different architectures. Such an implementation can
+be a baseline for further research to measure improvements.
 
 % Description of the scientific context (including the classification in the literature, projects, ...) and of the concrete embedding.
 

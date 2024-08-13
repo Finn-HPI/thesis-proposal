@@ -12,12 +12,11 @@ heavily use SIMD instructions to exploit SIMD data parallelism. In a multi-core 
 sort is often preferred over quicksort, as the parallelization of the divide-and-conquer approach
 is straightforward, and it has other advantages over quicksort such as more predictable and 
 cache-friendly memory access patterns and better load balancing through equal-sized partitioning. 
-Sorting through SIMD registers can be achieved through sorting networks \cite{10.1145/1468075.1468121} 
-with only min/max operators.
+Sorting through SIMD registers can be achieved through sorting networks \cite{10.1145/1468075.1468121}.
 The sorting network compares elements in parallel in each step using SIMD min/max operations. 
-Through the nature of the sorting network, the sorted outputs are transposed. Thus, a final
-transposition is needed, which requires additional SIMD shuffle instructions. We can build
-sorting kernels for various input sizes depending on the data type and register size. Merging can
+A final transposition is needed, which requires additional SIMD shuffle instructions to complete
+the sorting. We can build
+sorting kernels for various input sizes\footnote{\url{https://bertdobbelaere.github.io/sorting_networks.html}} depending on the data type and register size. Merging can
 also benefit from SIMD acceleration. There are two standard merging networks: bitonic merge networks
 and odd-even merge networks (\cite{10.1145/1468075.1468121}, SIMD accelerated \cite{4336211}). Both scale poorly for bigger input sizes, with odd-even networks 
 requiring slightly fewer comparisons but instead involving data movement and element masking.
