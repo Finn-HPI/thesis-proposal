@@ -1,14 +1,29 @@
 \section{Related Work}
 \label{sec:related-work}
 
-Description of related work in literature or other projects (theses, master projects, etc.).
-\cite{MPSM}
-\cite{Balkesen}
-\cite{10.14778/1687553.1687564}
-\cite{10.14778/1454159.1454171}
+% Description of related work in literature or other projects (theses, master projects, etc.).
 
-There are many papers about SIMD Sorting.
-In \cite{Watkins} a new way of sorting with AVX512 is proposed, based on Merge Path \cite{MergePath}, which
-is over 5x faster than a quicksort and 2x faster than Intel's IPP library sort. They assume 32-bit data, so they can
-fit 16 elements in one SIMD register. In comparison for a Sort-Merge Join we would at least need a 64-bit for each
-entry assuming tuples (key, rowId) with key and rowId being 32-bit. Therefore, we can only fit 8 instead of 16 values.  
+Many papers describe how sorting can be done efficiently in modern multi-core architectures for
+SIMD-accelerated sorting. Chhugani et al. \cite{10.14778/1454159.1454171} describe the concepts 
+needed for efficient SIMD (SSE)sorting for both single—and multi-core execution, including sorting
+networks, bitonic—and odd-evenmerge networks, and how to deal with memory bandwidth limitations 
+for large problem sizes through multiway merging. There are other ideas like MergePath \cite{MergePath}
+for merging only a few very large sublists in parallel and SIMD accelerated.
+Kim et al. \cite{10.14778/1687553.1687564} implemented a sort-merge join using SSE intrinsics using these same 
+concepts, projecting performance for wider SIMD widths that would outperform hash joins. Albutiu 
+et al. \cite{MPSM} present MPSM, a sort-merge join implementation designed for modern multi-core and
+multi-socket NUMA processors using their custom sorting routine without SIMD. They did an
+experimental evaluation on a 32-core (4 socket) system, concluding that their sort-merge join
+implementation is faster than the respective hash join implementation of Blanas et al. \cite{10.1145/1989323.1989328}. 
+Recent studies show that parallel radix-hash join has the best overall performance. Therefore,
+Balkesen et al. \cite{Balkesen} experimentally studied the performance of main-memory, parallel,
+multi-core join, and NUMA-aware algorithms, focusing on sort-merge and radix-hash join.
+They claim to provide the fastest in-memory join processing algorithms using sorting and hashing,
+and that sort-merge join gets more comparable in performance to radix-hash join with very large 
+input sizes. Still, they conclude that the radix-hash join exceeds the sort-merge join for 256-bit
+SIMD. None of the papers mentioned above take advantage of 512-bit SIMD. There is research on SIMD
+sorting using 512-bit SIMD (\cite{Watkins},\cite{8855628}). Still, to our knowledge, no research
+exists on implementing sort-merge join with the same optimizations and concepts like
+multiway merging to 512 SIMD registers.
+
+\cite{MergePath} 

@@ -73,6 +73,86 @@
   numpages = {12},
 }
 
+@article{10.14778/1454159.1454171,
+  author = {Chhugani, Jatin and Nguyen, Anthony D. and Lee, Victor W. and Macy,
+            William and Hagog, Mostafa and Chen, Yen-Kuang and Baransi, Akram and
+            Kumar, Sanjeev and Dubey, Pradeep},
+  title = {Efficient implementation of sorting on multi-core SIMD CPU
+           architecture},
+  year = {2008},
+  issue_date = {August 2008},
+  publisher = {VLDB Endowment},
+  volume = {1},
+  number = {2},
+  issn = {2150-8097},
+  url = {https://doi.org/10.14778/1454159.1454171},
+  doi = {10.14778/1454159.1454171},
+  abstract = {Sorting a list of input numbers is one of the most fundamental
+              problems in the field of computer science in general and
+              high-throughput database applications in particular. Although
+              literature abounds with various flavors of sorting algorithms,
+              different architectures call for customized implementations to
+              achieve faster sorting times.This paper presents an efficient
+              implementation and detailed analysis of MergeSort on current CPU
+              architectures. Our SIMD implementation with 128-bit SSE is 3.3X
+              faster than the scalar version. In addition, our algorithm performs
+              an efficient multiway merge, and is not constrained by the memory
+              bandwidth. Our multi-threaded, SIMD implementation sorts 64 million
+              floating point numbers in less than0.5 seconds on a commodity
+              4-core Intel processor. This measured performance compares
+              favorably with all previously published results.Additionally, the
+              paper demonstrates performance scalability of the proposed sorting
+              algorithm with respect to certain salient architectural features of
+              modern chip multiprocessor (CMP) architectures, including SIMD
+              width and core-count. Based on our analytical models of various
+              architectural configurations, we see excellent scalability of our
+              implementation with SIMD width scaling up to 16X wider than current
+              SSE width of 128-bits, and CMP core-count scaling well beyond 32
+              cores. Cycle-accurate simulation of Intel's upcoming x86 many-core
+              Larrabee architecture confirms scalability of our proposed
+              algorithm.},
+  journal = {Proc. VLDB Endow.},
+  month = {aug},
+  pages = {1313–1324},
+  numpages = {12},
+}
+
+@inproceedings{10.1145/1989323.1989328,
+  author = {Blanas, Spyros and Li, Yinan and Patel, Jignesh M.},
+  title = {Design and evaluation of main memory hash join algorithms for
+           multi-core CPUs},
+  year = {2011},
+  isbn = {9781450306614},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/1989323.1989328},
+  doi = {10.1145/1989323.1989328},
+  abstract = {The focus of this paper is on investigating efficient hash join
+              algorithms for modern multi-core processors in main memory
+              environments. This paper dissects each internal phase of a typical
+              hash join algorithm and considers different alternatives for
+              implementing each phase, producing a family of hash join
+              algorithms. Then, we implement these main memory algorithms on two
+              radically different modern multi-processor systems, and carefully
+              examine the factors that impact the performance of each method.Our
+              analysis reveals some interesting results -- a very simple hash
+              join algorithm is very competitive to the other more complex
+              methods. This simple join algorithm builds a shared hash table and
+              does not partition the input relations. Its simplicity implies that
+              it requires fewer parameter settings, thereby making it far easier
+              for query optimizers and execution engines to use it in practice.
+              Furthermore, the performance of this simple algorithm improves
+              dramatically as the skew in the input data increases, and it
+              quickly starts to outperform all other algorithms.},
+  booktitle = {Proceedings of the 2011 ACM SIGMOD International Conference on
+               Management of Data},
+  pages = {37–48},
+  numpages = {12},
+  keywords = {hash join, main memory, multi-core},
+  location = {Athens, Greece},
+  series = {SIGMOD '11},
+}
+
 @article{10.14778/1687553.1687564,
   author = {Kim, Changkyu and Kaldewey, Tim and Lee, Victor W. and Sedlar, Eric
             and Nguyen, Anthony D. and Satish, Nadathur and Chhugani, Jatin and
@@ -117,50 +197,6 @@
   journal = {Proc. VLDB Endow.},
   month = {aug},
   pages = {1378–1389},
-  numpages = {12},
-}
-
-@article{10.14778/1454159.1454171,
-  author = {Chhugani, Jatin and Nguyen, Anthony D. and Lee, Victor W. and Macy,
-            William and Hagog, Mostafa and Chen, Yen-Kuang and Baransi, Akram and
-            Kumar, Sanjeev and Dubey, Pradeep},
-  title = {Efficient implementation of sorting on multi-core SIMD CPU
-           architecture},
-  year = {2008},
-  issue_date = {August 2008},
-  publisher = {VLDB Endowment},
-  volume = {1},
-  number = {2},
-  issn = {2150-8097},
-  url = {https://doi.org/10.14778/1454159.1454171},
-  doi = {10.14778/1454159.1454171},
-  abstract = {Sorting a list of input numbers is one of the most fundamental
-              problems in the field of computer science in general and
-              high-throughput database applications in particular. Although
-              literature abounds with various flavors of sorting algorithms,
-              different architectures call for customized implementations to
-              achieve faster sorting times.This paper presents an efficient
-              implementation and detailed analysis of MergeSort on current CPU
-              architectures. Our SIMD implementation with 128-bit SSE is 3.3X
-              faster than the scalar version. In addition, our algorithm performs
-              an efficient multiway merge, and is not constrained by the memory
-              bandwidth. Our multi-threaded, SIMD implementation sorts 64 million
-              floating point numbers in less than0.5 seconds on a commodity
-              4-core Intel processor. This measured performance compares
-              favorably with all previously published results.Additionally, the
-              paper demonstrates performance scalability of the proposed sorting
-              algorithm with respect to certain salient architectural features of
-              modern chip multiprocessor (CMP) architectures, including SIMD
-              width and core-count. Based on our analytical models of various
-              architectural configurations, we see excellent scalability of our
-              implementation with SIMD width scaling up to 16X wider than current
-              SSE width of 128-bits, and CMP core-count scaling well beyond 32
-              cores. Cycle-accurate simulation of Intel's upcoming x86 many-core
-              Larrabee architecture confirms scalability of our proposed
-              algorithm.},
-  journal = {Proc. VLDB Endow.},
-  month = {aug},
-  pages = {1313–1324},
   numpages = {12},
 }
 
