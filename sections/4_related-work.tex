@@ -15,7 +15,7 @@ et al. \cite{MPSM} present MPSM, a sort-merge join implementation designed for m
 multi-socket NUMA processors using their custom sorting routine without SIMD. They did an
 experimental evaluation on a 32-core (4 socket) system, concluding that their sort-merge join
 implementation is faster than the respective hash join implementation of Blanas et al. \cite{10.1145/1989323.1989328}. 
-Recent studies show that parallel radix-hash join has the best overall performance. Therefore,
+Recent studies show that parallel radix-hash join has the best overall performance \cite{6544839}. Therefore,
 Balkesen et al. \cite{Balkesen} experimentally studied the performance of main-memory, parallel,
 multi-core join, and NUMA-aware algorithms, focusing on sort-merge and radix-hash join.
 They claim to provide the fastest in-memory join processing algorithms using sorting and hashing,
