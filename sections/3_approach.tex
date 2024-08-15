@@ -25,15 +25,15 @@ sequentially pulling already sorted data into SIMD registers and calling the mer
 writes to the output and then fetches new data. We can merge different subparts of the data in
 different threads as long as we have enough sorted sublists. In the later round of the merge tree,
 with only a few sorted sublists remaining, it becomes increasingly more challenging to parallelize
-efficiently. However, even at this point, we can parallelize. Parallelization is made possible 
-through the Merge Path \cite{MergePath}. This conceptual path allows us to parallelize a two-way merge by splitting
+efficiently. However, even at this point, we can parallelize. One way parallelization is made possible 
+is through the Merge Path \cite{MergePath}. This conceptual path allows us to parallelize a two-way merge by splitting
 it into non-overlapping segments that form disjoint sets of elements. We can then sequentially
 merge these segments in parallel. The sequential merging can again benefit from SIMD acceleration \cite{Watkins}.
 In the later stages, out-of-cache merging becomes necessary, quickly resulting in the memory
 bandwidth becoming the bottleneck of even a single-threaded merge routine. Therefore, multi-way
 merging \cite{Balkesen}, which consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
 , is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
-ensures that the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
+ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
 with a slight CPU overhead. Other hardware properties, such as NUMA-aware partitioning, can further
 assist in efficient sorting.
 
