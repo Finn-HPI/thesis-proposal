@@ -8,7 +8,7 @@ time-consuming part of the sort-merge join operation. Therefore, optimization ef
 primarily focus on this step, as it largely determines the runtime. Due to modern multi-core 
 architectures, sorting should intensively utilize thread-level parallelism by multithreading.
 With the recent architectural trends of wider register widths for SIMD, sorting should also
-heavily use SIMD instructions to exploit SIMD data parallelism. In a multi-core context, merge
+heavily use SIMD instructions to exploit data parallelism. In a multi-core context, merge
 sort is often preferred over quicksort, as the parallelization of the divide-and-conquer approach
 is straightforward, and it has other advantages over quicksort such as more predictable and 
 cache-friendly memory access patterns and better load balancing through equal-sized partitioning. 
@@ -34,9 +34,8 @@ bandwidth becoming the bottleneck of even a single-threaded merge routine. There
 merging \cite{Balkesen}, which consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
 , is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
 ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
-with a slight CPU overhead. Other hardware properties, such as NUMA-aware partitioning, can further
-assist in efficient sorting.
-
+with a slight CPU overhead. We can exploit other hardware properties, for instance through 
+NUMA-aware partitioning to speed up memory access.
 Before we can sort our input relations, the tuples need to be translated into a SIMD sortable
 format. Usually, a 64-bit pair (key, rid) (key \& rid both 32-bit) is assumed. We, therefore,
 support a maximum relation size of $2^{32}$. With most value types greater
@@ -44,7 +43,7 @@ than 32 bits, we need to compress the values of the join columns to 32 bits. Met
 key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \cite{1319989} have 
 been used to represent keys using 32 bits.
 
-After sorting both input relations, a final loop over both input relations suffices to find all
+After sorting both input relations, a final loop over both sorted input relations suffices to find all
 join candidates. The sorted data is of the form (key, rid). Hence, we can use the row ID (rid) to
 find the respective tuples. As meantioned before some compression was used to genereate the 32-bit
 search key from the join column value. Therefore, we might require additional validation and 

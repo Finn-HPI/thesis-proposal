@@ -11,7 +11,7 @@ implementations\footnote{Implementation of \cite{Balkesen} published at \url{htt
 Most SIMD sorting algorithms
 presented in the literature are not directly applicable to join operations as they usually use
 sorting keys of only 32 bits. We must additionally track the row ID (rid) corresponding to the search key for
-a joini, requiring at least 64-bit elements. The current implementations of sort-merge join in literature use SSE and AVX2 intrinsics,
+a join, requiring at least 64-bit elements. The current implementations of sort-merge join in literature use SSE and AVX2 intrinsics,
 but to our knowledge, there has yet to be an implementation using AVX512. Therefore, in the scope
 of this thesis, we want to integrate support for modern AVX512 sorting algorithms (\cite{Watkins}, \cite{8855628})
 next to SSE and AVX2 into a complete sort-merge join operator.
@@ -27,10 +27,10 @@ The sort-merge join uses radix cluster sorting, which uses pattern-defeating qui
 but no explicit SIMD instructions. It fundamentally differs from the modern approaches in the literature.
 These differences allow us to test our implementation against the existing sort-merge and hash-based join.
 Complete integration into an in-memory database allows us to run decision support benchmarks
-like TCP-H or TCP-DS to compare our sort-merge operator to other implementations in a more realistic scenario.
+like TCP-H or TCP-DS to compare our sort-merge join operator to other implementations in a more realistic scenario.
 Benchmarking should also include measuring the sorting throughput in tuples per second and all 
 algorithmic steps: initial data construction in the format of (key, rid) from the input relations,
 sorting, finding join partners, and the final construction of the joined table. 
 We want to test our implementation on different architectures and hardware, evaluating
-differences in core count, cache size, SIMD registers with different widths, NUMA regions, 
+differences in core count, cache size, SIMD registers widths, NUMA regions, 
 and other hardware-specific properties.
