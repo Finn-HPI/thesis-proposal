@@ -16,10 +16,16 @@ their NUMA-aware implementation of sort-merge join is superior to that of hash j
 leveraging SIMD). Balkesen et al. \cite{Balkesen} experimentally show contradicting results by implementing 
 optimized versions for sort-merge and radix-hash join, showing that their implementation of
 radix-hash join is still superior. They use AVX2 in their implementation, allowing further
-work to explore wider SIMD registers (e.g., AVX512). With only very few public implementations,
-which are often experimental, there is still great value in an open-source, state-of-the-art 
-sort-merge join implementation optimized for different architectures. Such an implementation can
-be a baseline for further research to measure improvements.
+work to explore wider SIMD registers (e.g., AVX512).
+
+Despite ongoing research, public implementations of join algorithms optimized for modern hardware
+are hard to find. Most existing implementations are proprietary or experimental, limiting their
+accessibility and usefulness to the research community and database developers. An open-source,
+state-of-the-art implementation of a sort-merge join optimized for different architectures would
+help address this need. Such an implementation serves as a valuable baseline for researchers
+looking to evaluate or improve upon existing methods, and it also contributes to advancing database
+system design by providing a solid foundation for future innovation.
+
 
 % Description of the scientific context (including the classification in the literature, projects, ...) and of the concrete embedding.
 
