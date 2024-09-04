@@ -351,4 +351,59 @@
   doi = {10.1109/ICDE.2013.6544839},
 }
 
+@inproceedings{10.1145/3209950.3209952,
+  author = {Vogelsgesang, Adrian and Haubenschild, Michael and Finis, Jan and
+            Kemper, Alfons and Leis, Viktor and Muehlbauer, Tobias and Neumann,
+            Thomas and Then, Manuel},
+  title = {Get Real: How Benchmarks Fail to Represent the Real World},
+  year = {2018},
+  isbn = {9781450358262},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3209950.3209952},
+  doi = {10.1145/3209950.3209952},
+  abstract = {Industrial as well as academic analytics systems are usually
+              evaluated based on well-known standard benchmarks, such as TPC-H or
+              TPC-DS. These benchmarks test various components of the DBMS
+              including the join optimizer, the implementation of the join and
+              aggregation operators, concurrency control and the scheduler.
+              However, these benchmarks fall short of evaluating the "real"
+              challenges imposed by modern BI systems, such as Tableau, that emit
+              machine-generated query workloads. This paper reports a
+              comprehensive study based on a set of more than 60k real-world BI
+              data repositories together with their generated query workload. The
+              machine-generated workload posed by BI tools differs from the "
+              hand-crafted" benchmark queries in multiple ways: Structurally
+              simple relational operator trees often come with extremely complex
+              scalar expressions such that expression evaluation becomes the
+              limiting factor. At the same time, we also encountered much more
+              complex relational operator trees than covered by benchmarks. This
+              long tail in both, operator tree and expression complexity, is not
+              adequately represented in standard benchmarks. We contribute
+              various statistics gathered from the large dataset, e.g., data type
+              distributions, operator frequency, string length distribution and
+              expression complexity. We hope our study gives an impetus to
+              database researchers and benchmark designers alike to address the
+              relevant problems in future projects and to enable better database
+              support for data exploration systems which become more and more
+              important in the Big Data era.},
+  booktitle = {Proceedings of the Workshop on Testing Database Systems},
+  articleno = {1},
+  numpages = {6},
+  location = {Houston, TX, USA},
+  series = {DBTest '18},
+}
 
+@inproceedings{DBLP:conf/cidr/NeumannF20,
+  author = {Thomas Neumann and Michael J. Freitag},
+  title = {Umbra: {A} Disk-Based System with In-Memory Performance},
+  booktitle = {10th Conference on Innovative Data Systems Research, {CIDR} 2020,
+               Amsterdam, The Netherlands, January 12-15, 2020, Online
+               Proceedings},
+  publisher = {www.cidrdb.org},
+  year = {2020},
+  url = {http://cidrdb.org/cidr2020/papers/p29-neumann-cidr20.pdf},
+  timestamp = {Mon, 18 Jul 2022 17:13:00 +0200},
+  biburl = {https://dblp.org/rec/conf/cidr/NeumannF20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
+}
