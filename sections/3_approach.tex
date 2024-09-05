@@ -41,10 +41,11 @@ In the later stages, out-of-cache merging becomes necessary, quickly resulting i
 bandwidth becoming the bottleneck of even a single-threaded merge routine. 
 
 Therefore, multi-way
-merging \cite{Balkesen}, which consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
+merging \cite{Balkesen}. The merge-tree consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
 , is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
 ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
-with a slight CPU overhead. 
+with a slight CPU overhead. Optionally, we could explore merging through other primitives, such as
+tournament trees and priority queues. 
 
 We can exploit other hardware properties, for instance through 
 NUMA-aware partitioning to speed up memory access.
