@@ -26,9 +26,7 @@ also benefit from SIMD acceleration. There are two standard merging networks: bi
 and odd-even merge networks (\cite{10.1145/1468075.1468121}, SIMD accelerated \cite{4336211}).
 Both scale poorly for bigger input sizes, with odd-even networks 
 requiring slightly fewer comparisons but instead involving data movement and element masking.
-Therefore, we can use SIMD-accelerated merging networks as a kernel for small input sizes, e.g., by
-sequentially pulling already sorted data into SIMD registers and calling the merge kernel, which 
-writes to the output and then fetches new data.
+We can use small SIMD-accelerated merging networks as a kernel, to sort bigger input sizes.
 
 We can merge different subparts of the data in
 different threads as long as we have enough sorted sublists. In the later round of the merge tree,
@@ -41,7 +39,7 @@ In the later stages, out-of-cache merging becomes necessary, quickly resulting i
 bandwidth becoming the bottleneck of even a single-threaded merge routine. 
 
 Therefore, multi-way
-merging \cite{Balkesen}. The merge-tree consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
+merging \cite{Balkesen} is introduced. The merge-tree consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
 , is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
 ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
 with a slight CPU overhead. Optionally, we could explore merging through other primitives, such as
@@ -58,6 +56,6 @@ been used to represent keys using 32 bits.
 
 After sorting both input relations, a final loop over both sorted input relations suffices to find all
 join candidates. The sorted data is of the form (key, rid). Hence, we can use the row ID (rid) to
-find the respective tuples. As meantioned before some compression was used to genereate the 32-bit
-sorting key from the join column value. Therefore, we might require additional validation and 
-filtering in the final merge step.
+find the respective tuples. As compression can result in false positives in the merging step, we
+might require additional validation and 
+filtering.

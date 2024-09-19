@@ -3,8 +3,8 @@
 
 % Description of related work in literature or other projects (theses, master projects, etc.).
 
-Many papers describe how sorting can be done efficiently in modern multi-core architectures for
-SIMD-accelerated sorting. Chhugani et al. \cite{10.14778/1454159.1454171} describe the concepts 
+Many papers describe how SIMD-accelerated sorting can be done efficiently on modern multi-core architectures. 
+Chhugani et al. \cite{10.14778/1454159.1454171} describe the concepts 
 needed for efficient (SSE) SIMD sorting for both single- and multi-core execution, including sorting
 networks, bitonic- and odd-even merge networks, and how to deal with memory bandwidth limitations 
 for large problem sizes through multiway merging. There are other ideas like MergePath \cite{MergePath}
@@ -18,7 +18,7 @@ implementation is faster than the respective hash join implementation of Blanas 
 Recent studies show that parallel radix-hash join has the best overall performance \cite{6544839}.
 
 Therefore,
-Balkesen et al. \cite{Balkesen} experimentally studied the performance of main-memory, parallel,
+Balkesen et al. \cite{Balkesen} experimentally studied the performance of in-memory, parallel,
 multi-core join, and NUMA-aware algorithms, focusing on sort-merge and radix-hash join.
 They claim to provide the fastest in-memory join processing algorithms using sorting and hashing,
 and that sort-merge join gets more comparable in performance to radix-hash join with very large 
@@ -26,13 +26,12 @@ input sizes. Still, they conclude that the radix-hash join exceeds the sort-merg
 SIMD. None of the papers mentioned above take advantage of 512-bit SIMD. The hash join operator
 implemented in Hyrise is based on \cite{6544839} and \cite{Balkesen}, allowing for good comparison
 between a sort-merge join operator inside the Hyrise system. Other in-memory databases like DuckDB 
-also employ parallel radix-hash joins.
+also utilize parallel radix-hash joins.
 
 There is research on SIMD
-sorting using 512-bit SIMD (\cite{Watkins},\cite{8855628}). Still, to our knowledge, no literature 
+sorting using AVX-512 (\cite{Watkins},\cite{8855628}). Still, to our knowledge, no literature 
 exists on implementing sort-merge join with the same optimizations and concepts like
-multiway merging for 512-bit SIMD.
-The much more extensive instruction set of AVX-512, with its gather/scatter intrinsics, improved
+multiway merging for AVX-512. The much more extensive instruction set of AVX-512, with its gather/scatter intrinsics, improved
 masking, and new instruction for data manipulation like compress and expand, might allow for
 further improvements, besides just offering a wider vector width, by creatively using these new
 instructions.

@@ -1,7 +1,7 @@
 \section{Project Plan}
 \label{sec:plan}
 
-\todo{Sketch of a time line for the thesis with major milestones, e.g.}
+% \todo{Sketch of a time line for the thesis with major milestones, e.g.}
 
 \begin{table}[h!]
     \centering
@@ -9,7 +9,24 @@
         \hline
         \textbf{Time} & \textbf{Writing/Research} & \textbf{Prototype} \\
         \hline
+                      & -- Deployment Architectures &  -- Setup for x86, IBM Power, AWS Graviton. \\
+        Oct - Nov  & -- SIMD Sorting Building Blocks & -- Implement sorting- and bitonic-merge networks on different architectures.\\ 
+                   & -- Single-CPU Vectorized Sorting (L2 Cache Size) & -- Implement single-threaded SIMD sorting (for 64-bit keys and starting with 256-bit support) \\ 
+                   & -- Single-CPU Merging & -- Implement merging of cache-sized sorted blocks using bitonic-merge kernel. \\
         \hline
+        Nov - Jan & -- AVX512 specific sorting & -- Scale up sorting- and bitonic-merge networks to wider bit width. \newline -- Explore further possible improvements through AVX512 specific instructions. \\
+                  & -- Out-of-cache Merging & -- Implement Multiway Merging (Explore alternatives: Tournament-trees, priority-queue). \\    
+                  & -- Simd Sorting of String types & -- Evaluate prefix- and hash-based key compressions (real string data from Public BI benchmark).\\ 
+                  & -- Hyrise Integration & -- Working Sort-Merge Implementation for integer/float types on different architectures.\\ 
+        \hline
+        Jan-Feb & -- Benchmarking and Evaluation & -- Parameter Tuning for different Architectures. \newline 
+                                                   -- Compare to Hash-join and old Sort-Merge Join (Hyrise). \newline
+                                                   -- Run TCP-H, TCP-DS and Pulic BI Benchmark. \\
+        \hline
+        Feb-Mar & -- Thesis Writing & \\
+        \hline
+        Mar-Apr & -- Thesis Writing & \\
+       \hline 
     \end{tabular}
     \caption{Planned Time Table}
     \label{tab:time-table}

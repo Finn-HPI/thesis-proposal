@@ -5,25 +5,24 @@
 
 This thesis aims to efficiently implement the sort-merge join algorithm,
 explicitly optimized for specific architectures and hardware components. 
-As Equi-joins are the most common type of join operation, particularly in relational databases,
+As Equi-joins are the most common type of join operation,
 we will restrict ourselves to an Equi-join implementation and then optionally extend upon this later.
 
 While multiple papers exist about modern implementation approaches for sort-merge joins in in-memory database systems
-and SIMD sorting generally, only some have public 
+and SIMD sorting, only some have public 
 implementations\footnote{Implementation of \cite{Balkesen} published at \url{https://archive-systems.ethz.ch/node/334}}.
 Most SIMD sorting algorithms
 presented in the literature are not directly applicable to join operations as they usually use
 sorting keys of only 32 bits. We must additionally track the row ID (rid) corresponding to the sorting key for
 a join, requiring at least 64-bit elements. The current implementations of sort-merge join in literature use SSE and AVX2 intrinsics,
-but to our knowledge, there has yet to be an implementation using AVX512. 
+but to our knowledge, there has yet to be an implementation using AVX-512. 
 
 Therefore, in the scope
-of this thesis, we want to integrate support for modern AVX512 sorting algorithms (\cite{Watkins}, \cite{8855628})
+of this thesis, we want to integrate support for modern AVX-512 sorting algorithms (\cite{Watkins}, \cite{8855628})
 next to SSE and AVX2 into a complete sort-merge join operator.
 It would also be of value to see how new and existing approaches transfer to other CPU
 architectures like Arm with its Scalable Vector Extension (SVE) or Power with its Vector Scalar
-Extension (VSX). We are most interested in AWS Graviton 3/4, which offers 256-bit SVE,
-and Power9/10, which, unfortunately, only offers 128-bit vector registers.
+Extension (VSX). We are most interested in AWS Graviton 3/4 and Power9/10.
 
 While some public implementations
 exist for modern and optimized sort-merge join, they have usually isolated implementations with a strong
@@ -31,12 +30,12 @@ focus on the sorting step using randomly chosen input data, often already in the
 Also, they often skip the lookup of matching rows and the construction of the joined table.
 Hence, in this thesis, we want to integrate our implementation of the sort-merge join into Hyrise
 \cite{DBLP:conf/edbt/DreselerK0KUP19},
-a research in-memory database. Hyrise contains both a radix-based Hash-Join and sort-merge join.
+a research in-memory database. Hyrise contains both a radix-based hash-join and sort-merge join.
 The sort-merge join uses radix cluster sorting, which uses pattern-defeating quicksort (boost)
 but no explicit SIMD instructions. It fundamentally differs from the modern approaches in the literature.
 These differences allow us to test our implementation against the existing sort-merge and hash-based join.
 Complete integration into an in-memory database allows us to run decision support benchmarks
-like TCP-H, TCP-DS, and the Public BI benchmark to compare operators to other implementations in a 
+like TCP-H, TCP-DS, and the Public BI benchmark\footnote{\url{https://github.com/cwida/public_bi_benchmark}} to compare operators to other implementations in a 
 more realistic scenario.
 
 Benchmarks like TCP-H have schemas and datatypes carefully designed by experts in database design.

@@ -16,7 +16,7 @@ their NUMA-aware implementation of sort-merge join is superior to that of hash j
 leveraging SIMD). Balkesen et al. \cite{Balkesen} experimentally show contradicting results by implementing 
 optimized versions for sort-merge and radix-hash join, showing that their implementation of
 radix-hash join is still superior. They use AVX2 in their implementation, allowing further
-work to explore wider SIMD registers (e.g., AVX512).
+work to explore wider SIMD registers (e.g., AVX-512).
 
 Despite ongoing research, public implementations of join algorithms optimized for modern hardware
 are hard to find. Most existing implementations are proprietary or experimental, limiting their
