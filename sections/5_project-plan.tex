@@ -10,14 +10,14 @@
         \hline
         \textbf{Time} & \textbf{Writing/Research} & \textbf{Prototype} \\
         \hline
-                      & -- Setup different Architectures &  -- Setup for x86, IBM Power, AWS Graviton. \\
-        Oct - Nov  & -- SIMD Sorting Building Blocks & -- Implement sorting- and bitonic-merge networks on different architectures.\\ 
-                   & -- Single-CPU Vectorized Sorting & -- Implement single-threaded SIMD sorting (for 64-bit keys and starting with 256-bit support) \\ 
-                   & -- Adapt and test on all architecture \\
+                      & -- Setup for different achitectures &  -- Setup for x86, IBM Power, AWS Graviton. \\
+        Oct - Nov  & -- SIMD sorting building blocks & -- Implement sorting- and bitonic-merge networks on different architectures.\\ 
+                   & -- Single-CPU vectorized sorting & -- Implement single-threaded SIMD sorting (for 64-bit keys and starting with 256-bit support) \\ 
+                   & -- Adapt to all architectures \\
         \hline
         Nov - Jan & -- AVX-512 specific sorting & -- Scale up sorting- and bitonic-merge networks to wider bit width. \newline -- Explore further possible improvements through AVX-512 specific instructions. \\
                   & -- Multiway-Merging & -- Implement Multiway Merging (Explore alternatives: tournament-trees, priority-queue). \\    
-                  & -- Hyrise integration & -- Working Sort-Merge-Join implementation for integer/float types on different architectures.\\ 
+                  & -- Hyrise integration & -- Working sort-merge-join implementation for integer/float types on different architectures.\\ 
                   & -- Simd sorting of string types & -- Implement prefix- and hash-based key compressions (real string data from Public BI benchmark).\\ 
         \hline
         Jan-Feb & -- Benchmarking \& Evaluation & -- Parameter tuning for different architectures. \newline 
