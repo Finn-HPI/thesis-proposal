@@ -1,318 +1,217 @@
 @article{MPSM,
-  author = {Albutiu, Martina-Cezara and Kemper, Alfons and Neumann, Thomas},
-  title = {Massively parallel sort-merge joins in main memory multi-core
-           database systems},
-  year = {2012},
-  issue_date = {June 2012},
-  publisher = {VLDB Endowment},
+  author = {Martina{-}Cezara Albutiu and Alfons Kemper and Thomas Neumann},
+  title = {Massively Parallel Sort-Merge Joins in Main Memory Multi-Core
+           Database Systems},
+  journal = {Proc. {VLDB} Endow.},
   volume = {5},
   number = {10},
-  issn = {2150-8097},
-  url = {https://doi.org/10.14778/2336664.2336678},
+  pages = {1064--1075},
+  year = {2012},
+  url = {http://vldb.org/pvldb/vol5/p1064\_martina-cezaraalbutiu\_vldb2012.pdf},
   doi = {10.14778/2336664.2336678},
-  abstract = {Two emerging hardware trends will dominate the database system
-              technology in the near future: increasing main memory capacities of
-              several TB per server and massively parallel multi-core processing.
-              Many algorithmic and control techniques in current database
-              technology were devised for disk-based systems where I/O dominated
-              the performance. In this work we take a new look at the well-known
-              sort-merge join which, so far, has not been in the focus of
-              research in scalable massively parallel multi-core data processing
-              as it was deemed inferior to hash joins. We devise a suite of new
-              massively parallel sort-merge (MPSM) join algorithms that are based
-              on partial partition-based sorting. Contrary to classical
-              sort-merge joins, our MPSM algorithms do not rely on a hard to
-              parallelize final merge step to create one complete sort order.
-              Rather they work on the independently created runs in parallel.
-              This way our MPSM algorithms are NUMA-affine as all the sorting is
-              carried out on local memory partitions. An extensive experimental
-              evaluation on a modern 32-core machine with one TB of main memory
-              proves the competitive performance of MPSM on large main memory
-              databases with billions of objects. It scales (almost) linearly in
-              the number of employed cores and clearly outperforms competing hash
-              join proposals -- in particular it outperforms the "cutting-edge"
-              Vectorwise parallel query engine by a factor of four.},
-  journal = {Proc. VLDB Endow.},
-  month = {jun},
-  pages = {1064–1075},
-  numpages = {12},
+  timestamp = {Sat, 25 Apr 2020 13:58:35 +0200},
+  biburl = {https://dblp.org/rec/journals/pvldb/AlbutiuKN12.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
   
 @article{Balkesen,
-  author = {Balkesen, Cagri and Alonso, Gustavo and Teubner, Jens and \"{O}zsu,
-            M. Tamer},
-  title = {Multi-core, main-memory joins: sort vs. hash revisited},
-  year = {2013},
-  issue_date = {September 2013},
-  publisher = {VLDB Endowment},
+  author = {Cagri Balkesen and Gustavo Alonso and Jens Teubner and M. Tamer {\"{
+            O}}zsu},
+  title = {Multi-Core, Main-Memory Joins: Sort vs. Hash Revisited},
+  journal = {Proc. {VLDB} Endow.},
   volume = {7},
   number = {1},
-  issn = {2150-8097},
-  url = {https://doi.org/10.14778/2732219.2732227},
+  pages = {85--96},
+  year = {2013},
+  url = {http://www.vldb.org/pvldb/vol7/p85-balkesen.pdf},
   doi = {10.14778/2732219.2732227},
-  abstract = {In this paper we experimentally study the performance of
-              main-memory, parallel, multi-core join algorithms, focusing on
-              sort-merge and (radix-)hash join. The relative performance of these
-              two join approaches have been a topic of discussion for a long
-              time. With the advent of modern multi-core architectures, it has
-              been argued that sort-merge join is now a better choice than
-              radix-hash join. This claim is justified based on the width of SIMD
-              instructions (sort-merge outperforms radix-hash join once SIMD is
-              sufficiently wide), and NUMA awareness (sort-merge is superior to
-              hash join in NUMA architectures). We conduct extensive experiments
-              on the original and optimized versions of these algorithms. The
-              experiments show that, contrary to these claims, radix-hash join is
-              still clearly superior, and sort-merge approaches to performance of
-              radix only when very large amounts of data are involved. The paper
-              also provides the fastest implementations of these algorithms, and
-              covers many aspects of modern hardware architectures relevant not
-              only for joins but for any parallel data processing operator.},
-  journal = {Proc. VLDB Endow.},
-  month = {sep},
-  pages = {85–96},
-  numpages = {12},
+  timestamp = {Tue, 21 Mar 2023 21:05:57 +0100},
+  biburl = {https://dblp.org/rec/journals/pvldb/BalkesenATO13.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @article{10.14778/1454159.1454171,
-  author = {Chhugani, Jatin and Nguyen, Anthony D. and Lee, Victor W. and Macy,
-            William and Hagog, Mostafa and Chen, Yen-Kuang and Baransi, Akram and
-            Kumar, Sanjeev and Dubey, Pradeep},
-  title = {Efficient implementation of sorting on multi-core SIMD CPU
+  author = {Jatin Chhugani and Anthony D. Nguyen and Victor W. Lee and William
+            Macy and Mostafa Hagog and Yen{-}Kuang Chen and Akram Baransi and
+            Sanjeev Kumar and Pradeep Dubey},
+  title = {Efficient implementation of sorting on multi-core {SIMD} {CPU}
            architecture},
-  year = {2008},
-  issue_date = {August 2008},
-  publisher = {VLDB Endowment},
+  journal = {Proc. {VLDB} Endow.},
   volume = {1},
   number = {2},
-  issn = {2150-8097},
-  url = {https://doi.org/10.14778/1454159.1454171},
+  pages = {1313--1324},
+  year = {2008},
+  url = {http://www.vldb.org/pvldb/vol1/1454171.pdf},
   doi = {10.14778/1454159.1454171},
-  abstract = {Sorting a list of input numbers is one of the most fundamental
-              problems in the field of computer science in general and
-              high-throughput database applications in particular. Although
-              literature abounds with various flavors of sorting algorithms,
-              different architectures call for customized implementations to
-              achieve faster sorting times.This paper presents an efficient
-              implementation and detailed analysis of MergeSort on current CPU
-              architectures. Our SIMD implementation with 128-bit SSE is 3.3X
-              faster than the scalar version. In addition, our algorithm performs
-              an efficient multiway merge, and is not constrained by the memory
-              bandwidth. Our multi-threaded, SIMD implementation sorts 64 million
-              floating point numbers in less than0.5 seconds on a commodity
-              4-core Intel processor. This measured performance compares
-              favorably with all previously published results.Additionally, the
-              paper demonstrates performance scalability of the proposed sorting
-              algorithm with respect to certain salient architectural features of
-              modern chip multiprocessor (CMP) architectures, including SIMD
-              width and core-count. Based on our analytical models of various
-              architectural configurations, we see excellent scalability of our
-              implementation with SIMD width scaling up to 16X wider than current
-              SSE width of 128-bits, and CMP core-count scaling well beyond 32
-              cores. Cycle-accurate simulation of Intel's upcoming x86 many-core
-              Larrabee architecture confirms scalability of our proposed
-              algorithm.},
-  journal = {Proc. VLDB Endow.},
-  month = {aug},
-  pages = {1313–1324},
-  numpages = {12},
+  timestamp = {Sat, 25 Apr 2020 13:59:34 +0200},
+  biburl = {https://dblp.org/rec/journals/pvldb/ChhuganiNLMHCBKD08.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{10.1145/1989323.1989328,
-  author = {Blanas, Spyros and Li, Yinan and Patel, Jignesh M.},
+  author = {Spyros Blanas and Yinan Li and Jignesh M. Patel},
+  editor = {Timos K. Sellis and Ren{\'{e}}e J. Miller and Anastasios
+            Kementsietsidis and Yannis Velegrakis},
   title = {Design and evaluation of main memory hash join algorithms for
            multi-core CPUs},
+  booktitle = {Proceedings of the {ACM} {SIGMOD} International Conference on
+               Management of Data, {SIGMOD} 2011, Athens, Greece, June 12-16,
+               2011},
+  pages = {37--48},
+  publisher = {{ACM}},
   year = {2011},
-  isbn = {9781450306614},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
   url = {https://doi.org/10.1145/1989323.1989328},
   doi = {10.1145/1989323.1989328},
-  abstract = {The focus of this paper is on investigating efficient hash join
-              algorithms for modern multi-core processors in main memory
-              environments. This paper dissects each internal phase of a typical
-              hash join algorithm and considers different alternatives for
-              implementing each phase, producing a family of hash join
-              algorithms. Then, we implement these main memory algorithms on two
-              radically different modern multi-processor systems, and carefully
-              examine the factors that impact the performance of each method.Our
-              analysis reveals some interesting results -- a very simple hash
-              join algorithm is very competitive to the other more complex
-              methods. This simple join algorithm builds a shared hash table and
-              does not partition the input relations. Its simplicity implies that
-              it requires fewer parameter settings, thereby making it far easier
-              for query optimizers and execution engines to use it in practice.
-              Furthermore, the performance of this simple algorithm improves
-              dramatically as the skew in the input data increases, and it
-              quickly starts to outperform all other algorithms.},
-  booktitle = {Proceedings of the 2011 ACM SIGMOD International Conference on
-               Management of Data},
-  pages = {37–48},
-  numpages = {12},
-  keywords = {hash join, main memory, multi-core},
-  location = {Athens, Greece},
-  series = {SIGMOD '11},
+  timestamp = {Thu, 11 Mar 2021 15:20:15 +0100},
+  biburl = {https://dblp.org/rec/conf/sigmod/BlanasLP11.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @article{10.14778/1687553.1687564,
-  author = {Kim, Changkyu and Kaldewey, Tim and Lee, Victor W. and Sedlar, Eric
-            and Nguyen, Anthony D. and Satish, Nadathur and Chhugani, Jatin and
-            Di Blas, Andrea and Dubey, Pradeep},
-  title = {Sort vs. Hash revisited: fast join implementation on modern
-           multi-core CPUs},
-  year = {2009},
-  issue_date = {August 2009},
-  publisher = {VLDB Endowment},
+  author = {Changkyu Kim and Eric Sedlar and Jatin Chhugani and Tim Kaldewey and
+            Anthony D. Nguyen and Andrea Di Blas and Victor W. Lee and Nadathur
+            Satish and Pradeep Dubey},
+  title = {Sort vs. Hash Revisited: Fast Join Implementation on Modern
+           Multi-Core CPUs},
+  journal = {Proc. {VLDB} Endow.},
   volume = {2},
   number = {2},
-  issn = {2150-8097},
-  url = {https://doi.org/10.14778/1687553.1687564},
+  pages = {1378--1389},
+  year = {2009},
+  url = {http://www.vldb.org/pvldb/vol2/vldb09-257.pdf},
   doi = {10.14778/1687553.1687564},
-  abstract = {Join is an important database operation. As computer architectures
-              evolve, the best join algorithm may change hand. This paper
-              re-examines two popular join algorithms -- hash join and sort-merge
-              join -- to determine if the latest computer architecture trends
-              shift the tide that has favored hash join for many years. For a
-              fair comparison, we implemented the most optimized parallel version
-              of both algorithms on the latest Intel Core i7 platform. Both
-              implementations scale well with the number of cores in the system
-              and take advantages of latest processor features for performance.
-              Our hash-based implementation achieves more than 100M tuples per
-              second which is 17X faster than the best reported performance on
-              CPUs and 8X faster than that reported for GPUs. Moreover, the
-              performance of our hash join implementation is consistent over a
-              wide range of input data sizes from 64K to 128M tuples and is not
-              affected by data skew. We compare this implementation to our highly
-              optimized sort-based implementation that achieves 47M to 80M tuples
-              per second. We developed analytical models to study how both
-              algorithms would scale with upcoming processor architecture trends.
-              Our analysis projects that current architectural trends of wider
-              SIMD, more cores, and smaller memory bandwidth per core imply
-              better scalability potential for sort-merge join. Consequently,
-              sort-merge join is likely to outperform hash join on upcoming chip
-              multiprocessors. In summary, we offer multicore implementations of
-              hash join and sort-merge join which consistently outperform all
-              previously reported results. We further conclude that the tide that
-              favors the hash join algorithm has not changed yet, but the change
-              is just around the corner.},
-  journal = {Proc. VLDB Endow.},
-  month = {aug},
-  pages = {1378–1389},
-  numpages = {12},
+  timestamp = {Sat, 25 Apr 2020 13:59:15 +0200},
+  biburl = {https://dblp.org/rec/journals/pvldb/KimSCKNBLSD09.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{Watkins,
-  author = {Watkins, Alex and Green, Oded},
-  year = {2018},
-  month = {11},
-  pages = {},
+  author = {Alex Watkins and Oded Green},
   title = {A Fast and Simple Approach to Merge and Merge Sort Using Wide Vector
            Instructions},
+  booktitle = {8th {IEEE/ACM} Workshop on Irregular Applications: Architectures
+               and Algorithms, IA3@SC 2018, Dallas, TX, USA, November 12, 2018},
+  pages = {37--44},
+  publisher = {{IEEE}},
+  year = {2018},
+  url = {https://doi.org/10.1109/IA3.2018.00012},
   doi = {10.1109/IA3.2018.00012},
+  timestamp = {Wed, 16 Oct 2019 14:14:57 +0200},
+  biburl = {https://dblp.org/rec/conf/sc/WatkinsG18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{MergePath,
-  author = {Odeh, Saher and Green, Oded and Mwassi, Zahi and Shmueli, Oz and
-            Birk, Yitzhak},
-  year = {2012},
-  month = {05},
-  pages = {1611-1618},
+  author = {Saher Odeh and Oded Green and Zahi Mwassi and Oz Shmueli and Yitzhak
+            Birk},
   title = {Merge Path - Parallel Merging Made Simple},
-  isbn = {978-1-4673-0974-5},
-  journal = {Proceedings of the 2012 IEEE 26th International Parallel and
-             Distributed Processing Symposium Workshops, IPDPSW 2012},
+  booktitle = {26th {IEEE} International Parallel and Distributed Processing
+               Symposium Workshops {\&} PhD Forum, {IPDPS} 2012, Shanghai, China,
+               May 21-25, 2012},
+  pages = {1611--1618},
+  publisher = {{IEEE} Computer Society},
+  year = {2012},
+  url = {https://doi.org/10.1109/IPDPSW.2012.202},
   doi = {10.1109/IPDPSW.2012.202},
+  timestamp = {Fri, 24 Mar 2023 00:02:01 +0100},
+  biburl = {https://dblp.org/rec/conf/ipps/OdehGMSB12.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{10.1145/1468075.1468121,
-  author = {Batcher, K. E.},
-  title = {Sorting networks and their applications},
+  author = {Kenneth E. Batcher},
+  title = {Sorting Networks and Their Applications},
+  booktitle = {American Federation of Information Processing Societies: {AFIPS}
+               Conference Proceedings: 1968 Spring Joint Computer Conference,
+               Atlantic City, NJ, USA, 30 April - 2 May 1968},
+  series = {{AFIPS} Conference Proceedings},
+  volume = {32},
+  pages = {307--314},
+  publisher = {Thomson Book Company, Washington {D.C.}},
   year = {1968},
-  isbn = {9781450378970},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
   url = {https://doi.org/10.1145/1468075.1468121},
   doi = {10.1145/1468075.1468121},
-  abstract = {To achieve high throughput rates today's computers perform several
-              operations simultaneously. Not only are I/O operations performed
-              concurrently with computing, but also, in multiprocessors, several
-              computing operations are done concurrently. A major problem in the
-              design of such a computing system is the connecting together of the
-              various parts of the system (the I/O devices, memories, processing
-              units, etc.) in such a way that all the required data transfers can
-              be accommodated. One common scheme is a high-speed bus which is
-              time-shared by the various parts; speed of available hardware
-              limits this scheme. Another scheme is a cross-bar switch or matrix;
-              limiting factors here are the amount of hardware (an m \texttimes{}
-              n matrix requires m \texttimes{} n cross-points) and the fan-in and
-              fan-out of the hardware.},
-  booktitle = {Proceedings of the April 30--May 2, 1968, Spring Joint Computer
-               Conference},
-  pages = {307–314},
-  numpages = {8},
-  location = {Atlantic City, New Jersey},
-  series = {AFIPS '68 (Spring)},
+  timestamp = {Wed, 14 Apr 2021 16:50:07 +0200},
+  biburl = {https://dblp.org/rec/conf/afips/Batcher68.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{4336211,
-  author = {Inoue, Hiroshi and Moriyama, Takao and Komatsu, Hideaki and Nakatani
-            , Toshio},
-  booktitle = {16th International Conference on Parallel Architecture and
-               Compilation Techniques (PACT 2007)},
-  title = {AA-Sort: A New Parallel Sorting Algorithm for Multi-Core SIMD
+  author = {Hiroshi Inoue and Takao Moriyama and Hideaki Komatsu and Toshio
+            Nakatani},
+  title = {AA-Sort: {A} New Parallel Sorting Algorithm for Multi-Core {SIMD}
            Processors},
+  booktitle = {16th International Conference on Parallel Architectures and
+               Compilation Techniques {(PACT} 2007), Brasov, Romania, September
+               15-19, 2007},
+  pages = {189--198},
+  publisher = {{IEEE} Computer Society},
   year = {2007},
-  volume = {},
-  number = {},
-  pages = {189-198},
-  keywords = {Sorting;Scalability;Yarn;Libraries;Acceleration;Parallel
-              processing;Pipelines;Computational complexity;Laboratories;Engines},
-  doi = {10.1109/PACT.2007.4336211},
+  url = {https://doi.ieeecomputersociety.org/10.1109/PACT.2007.12},
+  doi = {10.1109/PACT.2007.12},
+  timestamp = {Fri, 24 Mar 2023 00:02:44 +0100},
+  biburl = {https://dblp.org/rec/conf/IEEEpact/InoueMKN07.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
-
+ 
 % key prefix
-@misc{chris_nyberg__1994,
-  title = { AlphaSort: a RISC machine sort },
-  author = { Chris Nyberg and Tom Barclay and Zarka Cvetanovic and Jim Gray and
-            Dave Lomet },
-  year = { 1994 },
-  publisher = { ACM },
-  volume = { 23 },
-  pages = { 233-242 },
-  number = { 2 },
-  doi = { 10.1145/191839.191884 },
+@inproceedings{chris_nyberg__1994,
+  author = {Chris Nyberg and Tom Barclay and Zarka Cvetanovic and Jim Gray and
+            David B. Lomet},
+  editor = {Richard T. Snodgrass and Marianne Winslett},
+  title = {AlphaSort: {A} {RISC} Machine Sort},
+  booktitle = {Proceedings of the 1994 {ACM} {SIGMOD} International Conference
+               on Management of Data, Minneapolis, Minnesota, USA, May 24-27,
+               1994},
+  pages = {233--242},
+  publisher = {{ACM} Press},
+  year = {1994},
+  url = {https://doi.org/10.1145/191839.191884},
+  doi = {10.1145/191839.191884},
+  timestamp = {Tue, 16 Aug 2022 23:04:20 +0200},
+  biburl = {https://dblp.org/rec/conf/sigmod/NybergBCGL94.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 % XOR/shift hash function
 @inproceedings{1319989,
-  author = {Chen, S. and Ailamaki, A. and Gibbons, P.B. and Mowry, T.C.},
-  booktitle = {Proceedings. 20th International Conference on Data Engineering},
-  title = {Improving hash join performance through prefetching},
+  author = {Shimin Chen and Anastassia Ailamaki and Phillip B. Gibbons and Todd
+            C. Mowry},
+  editor = {Z. Meral {\"{O}}zsoyoglu and Stanley B. Zdonik},
+  title = {Improving Hash Join Performance through Prefetching},
+  booktitle = {Proceedings of the 20th International Conference on Data
+               Engineering, {ICDE} 2004, 30 March - 2 April 2004, Boston, MA, {
+               USA}},
+  pages = {116--127},
+  publisher = {{IEEE} Computer Society},
   year = {2004},
-  volume = {},
-  number = {},
-  pages = {116-127},
-  keywords = {Prefetching;Probes;Partitioning algorithms;Electric
-              breakdown;Database systems;Costs;Delay},
+  url = {https://doi.org/10.1109/ICDE.2004.1319989},
   doi = {10.1109/ICDE.2004.1319989},
+  timestamp = {Fri, 24 Mar 2023 00:00:02 +0100},
+  biburl = {https://dblp.org/rec/conf/icde/ChenAGM04.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{8855628,
-  author = {Yin, Zekun and Zhang, Tianyu and Müller, André and Liu, Hui and Wei,
-            Yanjie and Schmidt, Bertil and Liu, Weiguo},
-  booktitle = {2019 IEEE 21st International Conference on High Performance
-               Computing and Communications; IEEE 17th International Conference
-               on Smart City; IEEE 5th International Conference on Data Science
-               and Systems (HPCC/SmartCity/DSS)},
+  author = {Zekun Yin and Tianyu Zhang and Andr{\'{e}} M{\"{u}}ller and Hui Liu
+            and Yanjie Wei and Bertil Schmidt and Weiguo Liu},
+  editor = {Zheng Xiao and Laurence T. Yang and Pavan Balaji and Tao Li and
+            Keqin Li and Albert Y. Zomaya},
   title = {Efficient Parallel Sort on AVX-512-Based Multi-Core and Many-Core
            Architectures},
+  booktitle = {21st {IEEE} International Conference on High Performance
+               Computing and Communications; 17th {IEEE} International Conference
+               on Smart City; 5th {IEEE} International Conference on Data Science
+               and Systems, HPCC/SmartCity/DSS 2019, Zhangjiajie, China, August
+               10-12, 2019},
+  pages = {168--176},
+  publisher = {{IEEE}},
   year = {2019},
-  volume = {},
-  number = {},
-  pages = {168-176},
-  keywords = {Sorting;Program processors;Computer
-              architecture;Bandwidth;Merging;Kernel;Parallel processing;Sort, KNL
-              , Skylate-EP, AVX512, Merge Sort, Bitonic Sort},
-  doi = {10.1109/HPCC/SmartCity/DSS.2019.00038},
+  url = {https://doi.org/10.1109/HPCC/SmartCity/DSS.2019.00038},
+  doi = {10.1109/HPCC/SMARTCITY/DSS.2019.00038},
+  timestamp = {Mon, 26 Jun 2023 20:44:04 +0200},
+  biburl = {https://dblp.org/rec/conf/hpcc/YinZMLWSL19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{DBLP:conf/edbt/DreselerK0KUP19,
@@ -329,69 +228,46 @@
   publisher = {OpenProceedings.org},
   year = {2019},
   url = {https://doi.org/10.5441/002/edbt.2019.28},
-  doi = {10.5441/002/edbt.2019.28},
-  timestamp = {Mon, 18 Mar 2019 16:09:00 +0100},
+  doi = {10.5441/002/EDBT.2019.28},
+  timestamp = {Fri, 29 Jan 2021 22:08:50 +0100},
   biburl = {https://dblp.org/rec/conf/edbt/DreselerK0KUP19.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{6544839,
-  author = {Balkesen, Cagri and Teubner, Jens and Alonso, Gustavo and Özsu, M.
-            Tamer},
-  booktitle = {2013 IEEE 29th International Conference on Data Engineering
-               (ICDE)},
+  author = {Cagri Balkesen and Jens Teubner and Gustavo Alonso and M. Tamer {\"{
+            O}}zsu},
+  editor = {Christian S. Jensen and Christopher M. Jermaine and Xiaofang Zhou},
   title = {Main-memory hash joins on multi-core CPUs: Tuning to the underlying
            hardware},
+  booktitle = {29th {IEEE} International Conference on Data Engineering, {ICDE}
+               2013, Brisbane, Australia, April 8-12, 2013},
+  pages = {362--373},
+  publisher = {{IEEE} Computer Society},
   year = {2013},
-  volume = {},
-  number = {},
-  pages = {362-373},
-  keywords = {Hardware;Probes;Latches;Partitioning algorithms;Tuning;Instruction
-              sets;Algorithm design and analysis},
+  url = {https://doi.org/10.1109/ICDE.2013.6544839},
   doi = {10.1109/ICDE.2013.6544839},
+  timestamp = {Thu, 23 Mar 2023 23:59:59 +0100},
+  biburl = {https://dblp.org/rec/conf/icde/BalkesenTAO13.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{10.1145/3209950.3209952,
-  author = {Vogelsgesang, Adrian and Haubenschild, Michael and Finis, Jan and
-            Kemper, Alfons and Leis, Viktor and Muehlbauer, Tobias and Neumann,
-            Thomas and Then, Manuel},
+  author = {Adrian Vogelsgesang and Michael Haubenschild and Jan Finis and
+            Alfons Kemper and Viktor Leis and Tobias M{\"{u}}hlbauer and Thomas
+            Neumann and Manuel Then},
+  editor = {Alexander B{\"{o}}hm and Tilmann Rabl},
   title = {Get Real: How Benchmarks Fail to Represent the Real World},
+  booktitle = {Proceedings of the 7th International Workshop on Testing Database
+               Systems, DBTest@SIGMOD 2018, Houston, TX, USA, June 15, 2018},
+  pages = {1:1--1:6},
+  publisher = {{ACM}},
   year = {2018},
-  isbn = {9781450358262},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
   url = {https://doi.org/10.1145/3209950.3209952},
   doi = {10.1145/3209950.3209952},
-  abstract = {Industrial as well as academic analytics systems are usually
-              evaluated based on well-known standard benchmarks, such as TPC-H or
-              TPC-DS. These benchmarks test various components of the DBMS
-              including the join optimizer, the implementation of the join and
-              aggregation operators, concurrency control and the scheduler.
-              However, these benchmarks fall short of evaluating the "real"
-              challenges imposed by modern BI systems, such as Tableau, that emit
-              machine-generated query workloads. This paper reports a
-              comprehensive study based on a set of more than 60k real-world BI
-              data repositories together with their generated query workload. The
-              machine-generated workload posed by BI tools differs from the "
-              hand-crafted" benchmark queries in multiple ways: Structurally
-              simple relational operator trees often come with extremely complex
-              scalar expressions such that expression evaluation becomes the
-              limiting factor. At the same time, we also encountered much more
-              complex relational operator trees than covered by benchmarks. This
-              long tail in both, operator tree and expression complexity, is not
-              adequately represented in standard benchmarks. We contribute
-              various statistics gathered from the large dataset, e.g., data type
-              distributions, operator frequency, string length distribution and
-              expression complexity. We hope our study gives an impetus to
-              database researchers and benchmark designers alike to address the
-              relevant problems in future projects and to enable better database
-              support for data exploration systems which become more and more
-              important in the Big Data era.},
-  booktitle = {Proceedings of the Workshop on Testing Database Systems},
-  articleno = {1},
-  numpages = {6},
-  location = {Houston, TX, USA},
-  series = {DBTest '18},
+  timestamp = {Wed, 21 Nov 2018 12:44:08 +0100},
+  biburl = {https://dblp.org/rec/conf/sigmod/VogelsgesangHFK18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
 @inproceedings{DBLP:conf/cidr/NeumannF20,
