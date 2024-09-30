@@ -29,7 +29,7 @@ between a sort-merge join operator inside the Hyrise system. Other in-memory dat
 also utilize parallel radix-hash joins.
 
 There is research on SIMD
-sorting using AVX-512 (\cite{Watkins},\cite{8855628}). Still, to our knowledge, no literature 
+sorting using AVX-512 \cite{Watkins, 8855628}. Still, to our knowledge, no literature 
 exists on implementing sort-merge join with the same optimizations and concepts like
 multiway merging for AVX-512. The much more extensive instruction set of AVX-512, with its gather/scatter intrinsics, improved
 masking, and new instruction for data manipulation like compress and expand, might allow for
