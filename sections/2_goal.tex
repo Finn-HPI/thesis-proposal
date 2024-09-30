@@ -2,18 +2,17 @@
 \label{sec:goal}
 
 % Description of the concrete problems addressed as the goals of the thesis, planned/expected results, reference to other thesis, paper, etc., if any.
-This thesis aims to efficiently implement the sort-merge join algorithm,
-explicitly optimized for specific architectures and hardware components. 
-As Equi-joins are the most common type of join operation,
-we will restrict ourselves to an Equi-join implementation and then optionally extend upon this.
-While multiple papers exist about modern implementation approaches for sort-merge joins in in-memory database systems
-and SIMD sorting, only some have public 
+This thesis aims to efficiently implement the sort-merge join algorithm, explicitly optimized 
+for specific architectures and hardware components. As Equi-joins are the most common type of 
+join operation, we will restrict ourselves to an Equijoin implementation and then optionally
+extend upon this. While multiple papers exist about modern implementation approaches for
+sort-merge joins in in-memory database systems and SIMD sorting, only some have public 
 implementations\footnote{Implementation of \cite{Balkesen} published at \url{https://archive-systems.ethz.ch/node/334}}.
-
 The goals of this thesis include an open-source implementation of a sort-merge join algorithm
 integrated into the Hyrise in-memory database. The sorting should be accelerated through SIMD
-parallelism and have support for AVX2 and AVX-512. We further want to also experiment with
-other architectures like Arm and Power.
+parallelism and support AVX2 and AVX-512. The implementation should support int, float, and string
+data. We also want to experiment with other architectures like Arm and Power and run benchmarks 
+to evaluate our approach.
 
 \subsection{Hyrise Integration}
 While some public implementations

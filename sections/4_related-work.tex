@@ -3,35 +3,26 @@
 
 % Description of related work in literature or other projects (theses, master projects, etc.).
 
-Many papers describe how SIMD-accelerated sorting can be done efficiently on modern multi-core architectures. 
 Chhugani et al. \cite{10.14778/1454159.1454171} describe the concepts 
-needed for efficient (SSE) SIMD sorting for both single- and multi-core execution, including sorting
+needed for efficient SIMD sorting for both single- and multi-core execution, including sorting
 networks, bitonic- and odd-even merge networks, and how to deal with memory bandwidth limitations 
 for large problem sizes through multiway merging. There are other ideas like MergePath \cite{MergePath}
-for merging only a few very large sublists in parallel and SIMD accelerated.
+for merging a few very large sublists in parallel and SIMD accelerated.
 Kim et al. \cite{10.14778/1687553.1687564} implemented a sort-merge join using SSE intrinsics using these same 
 concepts, projecting performance for wider SIMD widths that would outperform hash joins. Albutiu 
-et al. \cite{MPSM} present MPSM, a sort-merge join implementation designed for modern multi-core and
-multi-socket NUMA processors using their custom sorting routine without SIMD. They did an
-experimental evaluation on a 32-core (4 socket) system, concluding that their sort-merge join
+et al. \cite{MPSM} present MPSM, a sort-merge join implementation using their custom sorting routine
+without SIMD, concluding that their sort-merge join
 implementation is faster than the respective hash join implementation of Blanas et al. \cite{10.1145/1989323.1989328}. 
-Recent studies show that parallel radix-hash join has the best overall performance \cite{6544839}.
-
-Therefore,
-Balkesen et al. \cite{Balkesen} experimentally studied the performance of in-memory, parallel,
-multi-core join, and NUMA-aware algorithms, focusing on sort-merge and radix-hash join.
+Balkesen et al. \cite{Balkesen} experimentally studied the performance of sort-merge and radix-hash join.
 They claim to provide the fastest in-memory join processing algorithms using sorting and hashing,
 and that sort-merge join gets more comparable in performance to radix-hash join with very large 
 input sizes. Still, they conclude that the radix-hash join exceeds the sort-merge join for 256-bit
-SIMD. None of the papers mentioned above take advantage of 512-bit SIMD. The hash join operator
-implemented in Hyrise is based on \cite{6544839} and \cite{Balkesen}, allowing for good comparison
-between a sort-merge join operator inside the Hyrise system. Other in-memory databases like DuckDB 
-also utilize parallel radix-hash joins.
+SIMD. The same authors claim that their parallel radix-hash join is the most efficient hash-join
+implementation yet \cite{6544839}. The hash join operator
+implemented in Hyrise is also based on \cite{6544839} and \cite{Balkesen}. 
 
-There is research on SIMD
-sorting using AVX-512 \cite{Watkins, 8855628}. Still, to our knowledge, no literature 
-exists on implementing sort-merge join with the same optimizations and concepts like
-multiway merging for AVX-512. The much more extensive instruction set of AVX-512, with its gather/scatter intrinsics, improved
-masking, and new instruction for data manipulation like compress and expand, might allow for
-further improvements, besides just offering a wider vector width, by creatively using these new
-instructions.
+None of the papers mentioned above take advantage of 512-bit SIMD. 
+There is research on SIMD sorting using AVX-512 \cite{Watkins, 8855628}. To the best of our knowledge,
+no literature exists on implementing sort-merge join with the same optimizations and concepts like
+multiway merging for AVX-512. 
+

@@ -4,16 +4,28 @@
 % Methodological and conceptual approach of the thesis and ideas/plans of implementation.
 
 The sort-merge join involves sorting both input relations. It is the most crucial and 
-time-consuming part of the sort-merge join operation. Therefore, optimization efforts should
-primarily focus on this step, as it largely determines the runtime. 
+time-consuming part of the sort-merge join operation. Therefore, high optimization efforts should
+be spend on this step, as it largely determines the runtime. 
 
 Due to modern multi-core 
 architectures, sorting should intensively utilize thread-level parallelism by multithreading.
 With the recent architectural trends of wider register widths for SIMD, sorting should also
-heavily use SIMD instructions to exploit data parallelism. In a multi-core context, merge
-sort is often preferred over quicksort, as the parallelization of the divide-and-conquer approach
+heavily use SIMD instructions to exploit data parallelism. 
+
+\subsection{Selection of Mergesort}
+In a multi-core context, we prefer mergesort over quicksort, as the parallelization of the divide-and-conquer approach
 is straightforward, and it has other advantages over quicksort such as more predictable and 
 cache-friendly memory access patterns and better load balancing through equal-sized partitioning. 
+
+\subsection{Data Preparation}
+Before we can sort our input relations, the tuples need to be translated into a SIMD sortable
+format. Usually, a 64-bit pair (key, rid) (key \& rid both 32-bit) is assumed. We, therefore,
+support a maximum relation size of $2^{32}$. With most value types greater
+than 32 bits, we need to compress the values of the join columns to 32 bits. Methods like 
+key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \cite{1319989} have 
+been used to generate keys of 32 bits.
+
+\subsection{SIMD Sort- and Merge-Networks}
 
 Sorting through SIMD registers can be achieved through sorting networks \cite{10.1145/1468075.1468121}.
 The sorting network compares elements in parallel in each step using SIMD min/max operations. 
@@ -28,34 +40,31 @@ Both scale poorly for bigger input sizes, with odd-even networks
 requiring slightly fewer comparisons but instead involving data movement and element masking.
 We can use small SIMD-accelerated merging networks as a kernel, to sort bigger input sizes.
 
+\subsection{Merging Higher Levels}
+
 We can merge different subparts of the data in
 different threads as long as we have enough sorted sublists. In the later round of the merge tree,
 with only a few sorted sublists remaining, it becomes increasingly more challenging to parallelize
-efficiently. However, even at this point, we can parallelize. One way parallelization is made possible 
+efficiently. 
+
+However, even at this point, we can parallelize. One way parallelization is made possible 
 is through the Merge Path \cite{MergePath}. This conceptual path allows us to parallelize a two-way merge by splitting
 it into non-overlapping segments that form disjoint sets of elements. We can then sequentially
 merge these segments in parallel. The sequential merging can again benefit from SIMD acceleration \cite{Watkins}.
-In the later stages, out-of-cache merging becomes necessary, quickly resulting in the memory
-bandwidth becoming the bottleneck of even a single-threaded merge routine. 
 
-Therefore, multi-way
+In the later stages, out-of-cache merging can become necessary, quickly resulting in the memory
+bandwidth becoming the bottleneck of even a single-threaded merge routine.  Therefore, multi-way
 merging \cite{Balkesen} is introduced. The merge-tree consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
 , is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
 ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
 with a slight CPU overhead. Optionally, we could explore merging through other primitives, such as
 tournament trees and priority queues. 
 
-We can exploit other hardware properties, for instance through 
-NUMA-aware partitioning to speed up memory access.
-Before we can sort our input relations, the tuples need to be translated into a SIMD sortable
-format. Usually, a 64-bit pair (key, rid) (key \& rid both 32-bit) is assumed. We, therefore,
-support a maximum relation size of $2^{32}$. With most value types greater
-than 32 bits, we need to compress the values of the join columns to 32 bits. Methods like 
-key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \cite{1319989} have 
-been used to represent keys using 32 bits.
+\subsection{Final Merging}
 
 After sorting both input relations, a final loop over both sorted input relations suffices to find all
 join candidates. The sorted data is of the form (key, rid). Hence, we can use the row ID (rid) to
 find the respective tuples. As compression can result in false positives in the merging step, we
 might require additional validation and 
-filtering.
+filtering. Further parallelization of this final merge step is also possible.
+
