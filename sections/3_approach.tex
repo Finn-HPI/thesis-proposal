@@ -25,7 +25,11 @@ than 32 bits, we need to compress the values of the join columns to 32 bits. Met
 key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \cite{1319989} have 
 been used to generate keys of 32 bits.
 
-\subsection{SIMD Sort- and Merge-Networks}
+\subsection{Partitioning}
+
+\subsection{Sorting and Merging}
+
+\subsubsection{SIMD Sort- and Merge-Networks}
 
 Sorting through SIMD registers can be achieved through sorting networks \cite{10.1145/1468075.1468121}.
 The sorting network compares elements in parallel in each step using SIMD min/max operations. 
@@ -40,7 +44,7 @@ Both scale poorly for bigger input sizes, with odd-even networks
 requiring slightly fewer comparisons but instead involving data movement and element masking.
 We can use small SIMD-accelerated merging networks as a kernel, to sort bigger input sizes.
 
-\subsection{Merging Higher Levels}
+\subsubsection{Merging Higher Levels}
 
 We can merge different subparts of the data in
 different threads as long as we have enough sorted sublists. In the later round of the merge tree,
@@ -60,11 +64,24 @@ ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwid
 with a slight CPU overhead. Optionally, we could explore merging through other primitives, such as
 tournament trees and priority queues. 
 
-\subsection{Final Merging}
+
+\subsection{String Types}
+
+As strings are variable in size, it makes sense to consider their internal representation and
+encoding. Certain string representations allow for cheap access to a prefix or short string.
+For instance, Umbra's string representation \cite{DBLP:conf/cidr/NeumannF20} consists of a 128-bit 
+struct and is adopted by more recent databases like CedarDB and DuckDB. The first 32 bits represent 
+the length. The remaining bits hold
+the complete string if the length is at most 12. Otherwise, the struct consists of the 32-bit
+length, a 32-bit prefix, and a pointer to a storage location. Due to saving pointer dereferences,
+this can speed up comparison, lexicographical sorting, and other prefix operations.
+
+
+\subsection{Joining}
 
 After sorting both input relations, a final loop over both sorted input relations suffices to find all
 join candidates. The sorted data is of the form (key, rid). Hence, we can use the row ID (rid) to
 find the respective tuples. As compression can result in false positives in the merging step, we
-might require additional validation and 
+might rEquijoinequire additional validation and 
 filtering. Further parallelization of this final merge step is also possible.
 

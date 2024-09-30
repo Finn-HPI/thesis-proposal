@@ -3,8 +3,8 @@
 
 % Description of the concrete problems addressed as the goals of the thesis, planned/expected results, reference to other thesis, paper, etc., if any.
 This thesis aims to efficiently implement the sort-merge join algorithm, explicitly optimized 
-for specific architectures and hardware components. As Equi-joins are the most common type of 
-join operation, we will restrict ourselves to an Equijoin implementation and then optionally
+for specific architectures and hardware components. As equi-joins are the most common type of 
+join operation, we will restrict ourselves to an equi-join implementation and then optionally
 extend upon this. While multiple papers exist about modern implementation approaches for
 sort-merge joins in in-memory database systems and SIMD sorting, only some have public 
 implementations\footnote{Implementation of \cite{Balkesen} published at \url{https://archive-systems.ethz.ch/node/334}}.
@@ -22,62 +22,61 @@ Also, they often skip the lookup of matching rows and the construction of the jo
 Hence, in this thesis, we want to integrate our implementation of the sort-merge join into Hyrise
 \cite{DBLP:conf/edbt/DreselerK0KUP19},
 a research in-memory database. Hyrise contains both a radix-based hash-join and sort-merge join.
-The sort-merge join uses radix cluster sorting, which uses pdqsort (\href{https://www.boost.org/}{libboost})
+The sort-merge join uses radix cluster sorting, which uses ``pdqsort'' (\href{https://www.boost.org/}{Boost C++ library})
 but no explicit SIMD instructions. It fundamentally differs from the modern approaches in the literature.
 These differences allow us to test our implementation against the existing sort-merge and hash-based join.
+
+\subsection{SIMD Sorting}
+
+Most SIMD sorting algorithms presented in the literature are not directly applicable to join
+operations as they usually use sorting keys of only 32 bits. We must additionally track the row ID
+(rid) corresponding to the sorting key for a join, resulting in 64-bit elements. Most architectures
+only support 8-, 16-, 32-, and 64-bit elements for SIMD. Therefore, larger elements like 128-bit are
+usually not supported.
+
+The current implementations of sort-merge join in literature use SSE and AVX2 intrinsics, but to
+our knowledge, there has yet to be an implementation using AVX-512. Therefore, in the scope of
+this thesis, we want to integrate support for modern AVX-512 sorting algorithms \cite{Watkins, 8855628}. 
 
 \subsection{Architectures}
 It would also be of value to see how new and existing approaches transfer to other CPU
 architectures like Arm with its Scalable Vector Extension (SVE) or Power with its Vector Scalar
-Extension (VSX). In addition to x86 systems, we are interested in experimenting with AWS Graviton 4
-and Power10.
+Extension (VSX).
 
-\subsection{SIMD}
+Hence, in addition to x86 systems, we optinally want to experiment with AWS Graviton 4
+and Power10. This requires adapting 
+the implementation to use the respective architecture's
+vector extension (e.g., ARM SVE or Power VSX).
 
-Most SIMD sorting algorithms presented in the literature are not directly applicable to join
-operations as they usually use sorting keys of only 32 bits. We must additionally track the row ID
-(rid) corresponding to the sorting key for a join, requiring at least 64-bit elements. The current
-implementations of sort-merge join in literature use SSE and AVX2 intrinsics, but to our knowledge,
-there has yet to be an implementation using AVX-512. Therefore, in the scope of this thesis, we want 
-to integrate support for modern AVX-512 sorting algorithms \cite{Watkins, 8855628}. For other architectures like
-ARM and Power, we will also need to adapt the implementation to use the respective architecture's
-vector extension (e.g., ARM SVE or Power VSX). 
 
 \subsection{Benchmarking}
 Complete integration into an in-memory database allows us to run decision support benchmarks
-like TCP-H, TCP-DS, and the Public BI benchmark\footnote{\url{https://github.com/cwida/public_bi_benchmark}} 
-to compare operators to other implementations in a 
-more realistic scenario.
+like TCP-H, TCP-DS, and the Join Order Benchmark (JOB) \cite{DBLP:journals/pvldb/LeisGMBK015} to
+compare operators to other implementations in a more realistic scenario.
 
 Benchmarks like TCP-H have schemas and datatypes carefully designed by experts in database design.
 Hence, they can fail to capture the chaotic nature of real-world applications \cite{10.1145/3209950.3209952}.
-For instance, TCP-H only uses integer values for keys. 32-bit integer values do not require any change
-in data format to be SIMD sortable.
+For instance, TCP-H only uses integer values for keys. 
+% 32-bit integer values do not require any change
+% in data format to be SIMD sortable.
 
-However, in many Business Intelligence applications, strings
-are used for various types, e.g., to deal with dirty data that is not parsable. String join keys
-complicate SIMD sorting, as multiple strings do not fit into SIMD registers. Therefore, we must
-reduce the key size by compression, prefix functions, or hashing. Shortening the key size can
-introduce false positives, which need to be filtered. We could accelerate traditional string
-sorting through SIMD in other ways (e.g., SIMD accelerated string comparison), not requiring any
-form of compression, but methods like sorting networks and bitonic merge networks will likely not
-be applicable.
+However, many Business Intelligence applications use strings for various data types, e.g. to deal
+with dirty data that is not parsable. Hence, we frequently encounter string-type join keys. For
+that, we chose JOB due to its real-world data and ease of use, as it 
+has already been integrated into Hyrise. The Public BI benchmark\footnote{\url{https://github.com/cwida/public_bi_benchmark}}
+also provides a realistic setting
+but is more difficult to use, and we only consider it optional.
+
+% String join keys
+% complicate SIMD sorting, as multiple strings do not fit into SIMD registers. Therefore, we must
+% reduce the key size by compression, prefix functions, or hashing. Shortening the key size can
+% introduce false positives, which need to be filtered. We could accelerate traditional string
+% sorting through SIMD in other ways (e.g., SIMD accelerated string comparison), not requiring any
+% form of compression, but methods like sorting networks and bitonic merge networks will likely not
+% be applicable.
 
 Benchmarking should also include measuring the sorting throughput in tuples per second and all 
 algorithmic steps: initial data construction in the format of (key, rid) from the input relations,
 sorting, finding join partners, and the final construction of the joined table. 
-
-\subsection{String Types}
-
-As strings are variable in size, it makes sense to consider their internal representation and
-encoding. For instance, in a dictionary encoding, the indices can be used as a sorting key rather
-than the string itself. Other representations allow for cheap access to a prefix or short string.
-For instance, Umbra's ``German String'' \cite{DBLP:conf/cidr/NeumannF20} consists of a 128-bit 
-struct and are adopted by more recent
-databases like CedarDB and DuckDB. The first 32 bits represent the length. The remaining bits hold
-the complete string if the length is at most 12. Otherwise, the struct consists of the 32-bit
-length, a 32-bit prefix, and a pointer to a storage location. Due to saving pointer dereferences,
-this can speed up comparison, lexicographical sorting, and other prefix operations.
-
 
 
