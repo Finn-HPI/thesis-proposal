@@ -31,18 +31,33 @@ been used to generate keys of 32 bits.
 
 \subsubsection{SIMD Sort- and Merge-Networks}
 
-Sorting through SIMD registers can be achieved through sorting networks \cite{10.1145/1468075.1468121}.
-The sorting network compares elements in parallel in each step using SIMD min/max operations. 
-A final transposition is needed, which requires additional SIMD shuffle instructions to complete
-the sorting. We can build
-sorting kernels for various input sizes\footnote{\url{https://bertdobbelaere.github.io/sorting_networks.html}} depending on the data type and register size. 
+To efficiently utilize SIMD, we need an algorithm that aligns with the SIMD execution model. 
+Sorting and merging networks meet these criteria. 
+For a network of input size $n$, $n$ items enter the network from left to right through a series of 
+comparators that emit the larger value to the top and the smaller value to the bottom. We can
+implement such a network with only min/max operators. The input is in arbitrary order for a 
+sorting network, leaving the network sorted. For a merging network, the input comprises two sorted
+halves that merge into one sorted list of size n. There are two standard merging network types:
+bitonic merge networks and odd-even merge networks \cite{10.14778/1454159.1454171}. 
 
-Merging can
-also benefit from SIMD acceleration. There are two standard merging networks: bitonic merge networks
-and odd-even merge networks (\cite{10.1145/1468075.1468121}, SIMD accelerated \cite{4336211}).
-Both scale poorly for bigger input sizes, with odd-even networks 
-requiring slightly fewer comparisons but instead involving data movement and element masking.
-We can use small SIMD-accelerated merging networks as a kernel, to sort bigger input sizes.
+We can replace each input item with a SIMD vector and use vectorized min/max operations to take
+advantage of SIMD. The input items are sorted across SIMD registers, therefore requiring additional
+transposition.
+Due to the merge networks' poor scaling \cite{DBLP:journals/vldb/MullerTA12}, we can use small merging networks within a merging
+algorithm for larger lists \cite{4336211}.
+
+% Sorting through SIMD registers can be achieved through sorting networks \cite{10.1145/1468075.1468121}.
+% The sorting network compares elements in parallel in each step using SIMD min/max operations. 
+% A final transposition is needed, which requires additional SIMD shuffle instructions to complete
+% the sorting. We can build
+% sorting kernels for various input sizes\footnote{\url{https://bertdobbelaere.github.io/sorting_networks.html}} depending on the data type and register size. 
+%
+% Merging can
+% also benefit from SIMD acceleration. There are two standard merging networks: bitonic merge networks
+% and odd-even merge networks (\cite{10.1145/1468075.1468121}, SIMD accelerated \cite{4336211}).
+% Both scale poorly for bigger input sizes, with odd-even networks 
+% requiring slightly fewer comparisons but instead involving data movement and element masking.
+% We can use small SIMD-accelerated merging networks as a kernel, to sort bigger input sizes.
 
 \subsubsection{Merging Higher Levels}
 
