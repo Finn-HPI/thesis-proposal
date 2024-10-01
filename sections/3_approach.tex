@@ -26,6 +26,19 @@ key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \ci
 been used to generate keys of 32 bits.
 
 \subsection{Partitioning}
+To make use of the multi-core architecture, the unsorted column data of both join relations are partitioned
+into chunks and distributed among the available threads. One option for partitioning is to divide
+the unsorted inputs into thread counts of many contiguous sections of equal size. Using this 
+strategy, occurrences of the same value can happen in multiple partitions, always requiring a global
+merge over all partitions (even if global sorting is not required). Another option is range partitioning, e.g., through radix partitioning.
+We can often improve radix-partitioning through software-managed buffers and non-temporal streaming
+stores (for x86 provided by AVX instruction set) \cite{DBLP:journals/pvldb/SchuhknechtKD15}.
+For architectures with non-uniform memory access
+(NUMA), it can make sense to distribute equally over NUMA regions and let threads read from their 
+closest NUMA region. However, for this thesis, we will keep NUMA optimizations optional.
+
+
+
 
 \subsection{Sorting and Merging}
 
@@ -61,23 +74,36 @@ algorithm for larger lists \cite{4336211}.
 
 \subsubsection{Merging Higher Levels}
 
-We can merge different subparts of the data in
-different threads as long as we have enough sorted sublists. In the later round of the merge tree,
-with only a few sorted sublists remaining, it becomes increasingly more challenging to parallelize
-efficiently. 
+% We can merge different subparts of the data in
+% different threads as long as we have enough sorted sublists. In the later round of the merge tree,
+% with only a few sorted sublists remaining, it becomes increasingly more challenging to parallelize
+% efficiently. 
+%
+% However, even at this point, we can parallelize. One way parallelization is made possible 
+% is through the Merge Path \cite{MergePath}. This conceptual path allows us to parallelize a two-way merge by splitting
+% it into non-overlapping segments that form disjoint sets of elements. We can then sequentially
+% merge these segments in parallel. The sequential merging can again benefit from SIMD acceleration \cite{Watkins}.
+%
+% In the later stages, out-of-cache merging can become necessary, quickly resulting in the memory
+% bandwidth becoming the bottleneck of even a single-threaded merge routine.  Therefore, multi-way
+% merging \cite{Balkesen} is introduced. The merge-tree consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
+% , is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
+% ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
+% with a slight CPU overhead. Optionally, we could explore merging through other primitives, such as
+% tournament trees and priority queues. 
 
-However, even at this point, we can parallelize. One way parallelization is made possible 
-is through the Merge Path \cite{MergePath}. This conceptual path allows us to parallelize a two-way merge by splitting
-it into non-overlapping segments that form disjoint sets of elements. We can then sequentially
-merge these segments in parallel. The sequential merging can again benefit from SIMD acceleration \cite{Watkins}.
-
-In the later stages, out-of-cache merging can become necessary, quickly resulting in the memory
-bandwidth becoming the bottleneck of even a single-threaded merge routine.  Therefore, multi-way
-merging \cite{Balkesen} is introduced. The merge-tree consists of multiple two-way merge units (managed as tasks) connected via FIFO queues
-, is introduced. Only the leaves of the merge tree load data from memory. Blocking and task switching 
-ensure the combined FIFO queues fit into the CPU cache. This way, memory bandwidth can be reduced
-with a slight CPU overhead. Optionally, we could explore merging through other primitives, such as
-tournament trees and priority queues. 
+We can merge different subparts of the data in different threads as long as we have enough
+sorted sublists. In the later round of the merge tree, with only a few sorted sublists remaining,
+parallelizing becomes more challenging. However, parallelization is still possible through
+algorithms like Merge Path \cite{MergePath}. This conceptual path allows us to parallelize a two-way
+merge by splitting it into non-overlapping segments that form disjoint sets of elements.
+We can then merge these segments in parallel. In the later stages, out-of-cache merging becomes
+necessary, potentially creating a bottleneck through memory bandwidth limitations. Therefore,
+multi-way merging \cite{Balkesen,10.14778/1454159.1454171} solves this problem by saving roundtrips to memory. It implements a 
+merge-tree. Each node is a two-way merge unit, with nodes connected via FIFO queues. 
+Only the leave nodes directly access memory. By pausing and starting the execution of nodes,
+we always ensure that all combined FIFO queues still fit into the cache. By doing so, we 
+step-by-step propagate buffers of merged data through the merge tree until all data is merged.
 
 
 \subsection{String Types}
