@@ -7,7 +7,7 @@ advanced instruction sets, and other hardware accelerants like vector operations
 perform the same operation on multiple data items simultaneously, have significantly altered this
 landscape. Hence, we must reconsider how we implement modern systems.
 
-\subsection{Importance for Database Systems}
+% \subsection{Importance for Database Systems}
 In-memory database systems, which store data directly in the main memory rather than on disk,
 provide significantly faster data access and processing due to reduced latency.
 Therefore, they are no longer I/O bound and, need high intra-operator
@@ -15,9 +15,9 @@ parallelism. To fully utilize the multi-core architecture and other hardware fea
 locality and SIMD instructions for higher data parallelism should be considered to achieve maximum
 performance.
 
-\subsection{Efficient Join Implementation}
+% \subsection{Efficient Join Implementation}
 In this thesis we want to look at one common database operator: the join \cite{DBLP:conf/cloud/BlanasP13}.
-The join operator is a fundamental component of every database system.
+The join operator is a fundamental component of a database system.
 In recent years, the difference in performance between the sort-merge and radix-hash join has been
 the subject of ongoing debate. Kim et al. \cite{10.14778/1687553.1687564} projected that Sort-Merge Join would outperform hash-based
 alternatives with 512-bit SIMD. Albutiu et al. \cite{MPSM} reinforced this claim with recent results reporting that
@@ -26,7 +26,7 @@ leveraging SIMD). Balkesen et al. \cite{Balkesen} experimentally show contradict
 optimized versions for sort-merge and radix-hash join, showing that their implementation of
 radix-hash join is still superior.
 
-\subsection{Open-Source Implementation}
+% \subsection{Open-Source Implementation}
 
 Despite ongoing research, public implementations of join algorithms optimized for modern hardware
 are hard to find. Most existing implementations are proprietary or 
@@ -36,7 +36,4 @@ state-of-the-art implementation of a sort-merge join optimized for different arc
 help address this need. Such an implementation serves as a valuable baseline for researchers
 looking to evaluate or improve upon existing methods, and it also contributes to advancing database
 system design by providing a solid foundation for future innovation.
-
-
-% Description of the scientific context (including the classification in the literature, projects, ...) and of the concrete embedding.
 

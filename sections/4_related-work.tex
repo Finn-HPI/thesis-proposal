@@ -2,23 +2,19 @@
 \label{sec:related-work}
 
 % Description of related work in literature or other projects (theses, master projects, etc.).
-Several papers describe how SIMD-accelerated sorting can be done efficiently on mod-
-ern multi-core architectures.
+Several papers describe how SIMD-accelerated sorting can be done efficiently on modern multi-core architectures.
 Chhugani et al. \cite{10.14778/1454159.1454171} describe the concepts 
-needed for efficient SIMD sorting for both single- and multi-core execution, including sorting
-networks, bitonic- and odd-even merge networks, and how to deal with memory bandwidth limitations 
-for large problem sizes through multiway merging. There are other ideas like MergePath \cite{MergePath}
-for merging a few very large sublists in parallel and SIMD accelerated.
-Kim et al. \cite{10.14778/1687553.1687564} implemented a sort-merge join using SSE intrinsics using these same 
-concepts, projecting performance for wider SIMD widths that would outperform hash joins. Albutiu 
-et al. \cite{MPSM} present MPSM, a sort-merge join implementation using their custom sorting routine
+needed for efficient SIMD sorting for both single- and multi-core execution. MergePath \cite{MergePath}
+presents an algorithm for merging a few very large sublists in parallel.
+Kim et al. \cite{10.14778/1687553.1687564} implemented a sort-merge join using SSE intrinsics,
+projecting performance for wider SIMD widths that would outperform hash joins. Albutiu 
+et al. \cite{MPSM} present MPSM, a sort-merge join implementation 
 without SIMD, concluding that their sort-merge join
-implementation is faster than the respective hash join implementation of Blanas et al. \cite{10.1145/1989323.1989328}. 
+implementation is faster than the hash join implementation of Blanas et al. \cite{10.1145/1989323.1989328}. 
 Balkesen et al. \cite{Balkesen} experimentally studied the performance of sort-merge and radix-hash join.
-They claim to provide the fastest in-memory join processing algorithms using sorting and hashing,
-and that sort-merge join gets more comparable in performance to radix-hash join with very large 
-input sizes. Still, they conclude that the radix-hash join exceeds the sort-merge join for 256-bit
-SIMD. The same authors claim that their parallel radix-hash join is the most efficient hash-join
+They claim to provide the fastest in-memory join algorithms using sorting and hashing.
+Still, they conclude that the radix-hash join exceeds the sort-merge join for 256-bit
+SIMD. They also claim that their parallel radix-hash join is the most efficient hash-join
 implementation yet \cite{6544839}. The hash join operator
 implemented in Hyrise is also based on \cite{6544839} and \cite{Balkesen}. 
 
