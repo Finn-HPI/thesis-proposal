@@ -7,14 +7,12 @@ The sort-merge join involves sorting both input relations by the join attribute.
 time-consuming part of the sort-merge join operation. Therefore, high optimization efforts should
 be spend on this step, as it largely determines the runtime. 
 
-Due to modern multi-core 
-architectures, sorting should intensively utilize thread-level parallelism by multithreading.
-With the recent architectural trends of wider register widths for SIMD, sorting should also
-heavily use SIMD instructions to exploit data parallelism. 
-
-In a multi-core context, we prefer mergesort over quicksort, as the parallelization of the divide-and-conquer approach
-is straightforward, and it has other advantages over quicksort such as more predictable and 
-cache-friendly memory access patterns and better load balancing through equal-sized partitioning. 
+We chose vectorized mergesort over vectorized quicksort because of the extensive foundational work in 
+the literature. Some SIMD quicksort implementations vectorize only the partitioning step \cite{DBLP:journals/cj/GueronK16},
+and some newer implementations also use sorting networks using AVX-512 \cite{Bramas}. They often share
+similarities then compared to mergesort, such as sorting networks. While it is interesting
+to study the differences between vectorized quicksort and merge sort, we will limit ourselves to
+mergesort due to the limited time scope.
 
 \subsection{SIMD Data Format}
 Before we can sort our input relations, the join attribute values need to be translated into a SIMD sortable
