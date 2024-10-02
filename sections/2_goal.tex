@@ -4,19 +4,18 @@
 % Description of the concrete problems addressed as the goals of the thesis, planned/expected results, reference to other thesis, paper, etc., if any.
 This thesis aims to efficiently implement the sort-merge join algorithm, explicitly optimized 
 for specific architectures and hardware components. As equi-joins are the most common type of 
-join operation, we will restrict ourselves to an equi-join implementation and then optionally
-extend upon this. While multiple papers exist about modern implementation approaches for
-sort-merge joins in in-memory database systems and SIMD sorting, only some have public 
-implementations\footnote{Implementation of \cite{Balkesen} published at \url{https://archive-systems.ethz.ch/node/334}}.
+join operation \cite{DBLP:conf/cloud/BlanasP13}, we will restrict ourselves to an equi-join implementation and then optionally
+extend upon this. We will examine the join in isolation without considering the implications of the sorted results.
+
 The goals of this thesis include an open-source implementation of a sort-merge join algorithm
 integrated into the Hyrise in-memory database. The sorting should be accelerated through SIMD
-parallelism and support AVX2 and AVX-512. The implementation should support int, float, and string
+parallelism and support at least AVX2 and AVX-512. Possible input data types are int, float, and string
 data. We also want to experiment with other architectures like Arm and Power and run benchmarks 
 to evaluate our approach.
 
 \subsection{Hyrise Integration}
 While some public implementations
-exist for modern and optimized sort-merge join, they have usually isolated implementations with a strong
+exist for modern and optimized sort-merge joins, they have usually isolated implementations with a strong
 focus on the sorting step using randomly chosen input data, often already in the required data format. 
 Also, they often skip the lookup of matching rows and the construction of the joined table.
 Hence, in this thesis, we want to integrate our implementation of the sort-merge join into Hyrise
@@ -28,8 +27,7 @@ These differences allow us to test our implementation against the existing sort-
 
 \subsection{SIMD Sorting}
 
-Most SIMD sorting algorithms presented in the literature are not directly applicable to join
-operations as they usually use sorting keys of only 32 bits. We must additionally track the row ID
+Most SIMD sorting algorithms presented in the literature use sorting keys of only 32 bits. We must additionally track the row ID
 (rid) corresponding to the sorting key for a join, resulting in 64-bit elements. Most architectures
 only support 8-, 16-, 32-, and 64-bit elements for SIMD. Therefore, larger elements like 128-bit are
 usually not supported.
@@ -43,10 +41,10 @@ It would also be of value to see how new and existing approaches transfer to oth
 architectures like Arm with its Scalable Vector Extension (SVE) or Power with its Vector Scalar
 Extension (VSX).
 
-Hence, in addition to x86 systems, we optinally want to experiment with AWS Graviton 4
+Hence, in addition to x86 systems, we optinally want to experiment with AWS Graviton 4 or other ARM chips
 and Power10. This requires adapting 
 the implementation to use the respective architecture's
-vector extension (e.g., ARM SVE or Power VSX).
+vector extension.
 
 
 \subsection{Benchmarking}

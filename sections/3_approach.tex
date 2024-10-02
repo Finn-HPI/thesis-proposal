@@ -3,7 +3,7 @@
 
 % Methodological and conceptual approach of the thesis and ideas/plans of implementation.
 
-The sort-merge join involves sorting both input relations. It is the most crucial and 
+The sort-merge join involves sorting both input relations by the join attribute. It is the most crucial and 
 time-consuming part of the sort-merge join operation. Therefore, high optimization efforts should
 be spend on this step, as it largely determines the runtime. 
 
@@ -12,16 +12,15 @@ architectures, sorting should intensively utilize thread-level parallelism by mu
 With the recent architectural trends of wider register widths for SIMD, sorting should also
 heavily use SIMD instructions to exploit data parallelism. 
 
-% \subsection{Selection of Mergesort}
 In a multi-core context, we prefer mergesort over quicksort, as the parallelization of the divide-and-conquer approach
 is straightforward, and it has other advantages over quicksort such as more predictable and 
 cache-friendly memory access patterns and better load balancing through equal-sized partitioning. 
 
-\subsection{Data Preparation}
-Before we can sort our input relations, the colum values need to be translated into a SIMD sortable
-format. Usually, a 64-bit pair (key, rid) (key \& rid both 32-bit) is assumed. We, therefore,
+\subsection{SIMD Data Format}
+Before we can sort our input relations, the join attribute values need to be translated into a SIMD sortable
+format. Usually, a 64-bit pair (key, rid) is assumed. We, therefore,
 support a maximum relation size of $2^{32}$. With most value types greater
-than 32 bits, e.g. strings, we need to compress the values of the join columns to 32 bits. Methods like 
+than 32 bits, e.g. strings, we need to compress the values of the join columns. Methods like 
 key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \cite{1319989} have 
 been used to generate keys of 32 bits.
 
@@ -39,16 +38,20 @@ this can speed up comparison, lexicographical sorting, and other prefix operatio
 \subsection{Partitioning}
 To make use of the multi-core architecture, the unsorted column data of both join relations are partitioned
 into chunks and distributed among the available threads. One option for partitioning is to divide
-the unsorted inputs into thread counts of many contiguous sections of equal size. Using this 
+the unsorted inputs into thread count many contiguous sections of equal size. Using this 
 strategy, occurrences of the same value can happen in multiple partitions, always requiring a global
 merge over all partitions (even if global sorting is not required). Another option is range partitioning, e.g., through radix partitioning.
 We can often improve radix-partitioning through software-managed buffers and non-temporal streaming
-stores (for x86 provided by AVX instruction set) \cite{DBLP:journals/pvldb/SchuhknechtKD15}.
+stores (for x86 provided by the AVX instruction set) \cite{DBLP:journals/pvldb/SchuhknechtKD15}.
 For architectures with non-uniform memory access
 (NUMA), it can make sense to distribute equally over NUMA regions and let threads read from their 
 closest NUMA region. However, for this thesis, we will keep NUMA optimizations optional.
 
 \subsection{Sorting and Merging}
+
+The sort and merge step aims to sort both input relations based on the join attribute. Usually,
+we aim for global sorting, but there might be cases where partial sorting is enough, e.g.,
+inside a range partition.
 
 \subsubsection{SIMD Sort- and Merge-Networks}
 
@@ -78,12 +81,12 @@ merge by splitting it into non-overlapping segments that form disjoint sets of e
 We can then merge these segments in parallel. In the later stages, out-of-cache merging becomes
 necessary, potentially creating a bottleneck through memory bandwidth limitations. Therefore,
 multi-way merging \cite{Balkesen,10.14778/1454159.1454171} solves this problem by saving roundtrips to memory. It implements a 
-merge-tree. Each node is a two-way merge unit, with nodes connected via FIFO queues. 
+merge-tree, with each node being a two-way merge unit. The nodes are connected via FIFO queues. 
 Only the leave nodes directly access memory. By pausing and starting the execution of nodes,
 we always ensure that all combined FIFO queues still fit into the cache. By doing so, we 
 step-by-step propagate buffers of merged data through the merge tree until all data is merged.
 Optionally, we could explore merging through other primitives, such as
-tournament trees and priority queues.
+tournament trees or priority queues.
 
 \subsection{Joining}
 
@@ -91,5 +94,5 @@ After sorting both input relations, a final loop over both sorted input relation
 join candidates. The sorted data is of the form (key, rid). Hence, we can use the row ID (rid) to
 find the respective tuples. As compression can result in false positives in the merging step, we
 might require additional validation and 
-filtering. Further parallelization of this final merge step is also possible.
+filtering. Further parallelization of this final join step is also possible.
 

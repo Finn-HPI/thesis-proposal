@@ -1,48 +1,6 @@
 \section{Project Plan}
 \label{sec:plan}
 
-% \todo{Sketch of a time line for the thesis with major milestones, e.g.}
-% \begin{center}
-% \begin{longtable}{|l|l|l|}
-% \caption{A sample long table.} \label{tab:long} \\
-%
-% \hline \multicolumn{1}{|c|}{\textbf{Time}} & \multicolumn{1}{c|}{\textbf{Writing/Research}} & \multicolumn{1}{c|}{\textbf{Prototype}} \\ \hline 
-% \endfirsthead
-%
-% \multicolumn{3}{c}%
-% {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-% \hline \multicolumn{1}{|c|}{\textbf{Time}} & \multicolumn{1}{c|}{\textbf{Writing/Research}} & \multicolumn{1}{c|}{\textbf{Prototype}} \\ \hline 
-% \endhead
-%
-% \hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
-% \endfoot
-% \hline
-%                       & -- Setup for different achitectures &  -- Setup for x86, IBM Power, AWS Graviton. \\
-%         Oct - Nov  & -- SIMD sorting building blocks & -- Implement sorting- and bitonic-merge networks on different architectures.\\ 
-%                    & -- Single-threaded SIMD sorting & -- Implement single-threaded SIMD sorting (for 64-bit keys and starting with 256-bit support) \\ 
-%                    & -- Adapt to all architectures \\
-%         \hline
-%         Nov - Jan & -- AVX-512 specific sorting & -- Scale up sorting- and bitonic-merge networks to wider bit width. \newline -- Explore further possible improvements through AVX-512 specific instructions. \\
-%                   & -- Multiway-Merging & -- Implement Multiway Merging (Explore alternatives: tournament-trees, priority-queue). \\    
-%                   & -- Hyrise integration & -- Working sort-merge-join implementation for integer/float types on different architectures.\\ 
-%                   & -- Simd sorting of string types & -- Implement prefix- and hash-based key compressions (real string data from Public BI benchmark).\\ 
-%         \hline
-%         Jan-Feb & -- Benchmarking \& Evaluation & -- Parameter tuning for different architectures. \newline 
-%                                                    -- Compare to hash-join and old sort-merge join (Hyrise). \newline
-%                                                    -- Run TCP-H, TCP-DS and Pulic BI benchmark. \\
-%         \hline
-%         Feb-Mar & -- Thesis Writing \& Evaluation & -- Draft of master thesis\\
-%         \hline
-%         Mar-Apr & -- Thesis Writing \& Evaluation & -- Finished master thesis \\
-%        \hline 
-%
-% \hline \hline
-% \endlastfoot
-%
-% \end{longtable}
-% \end{center}
-
-
 \begin{longtable}{ | c | m{0.4\textwidth} | m{0.4\textwidth} | }
    \caption{Planned Time Table} \label{tab:time-table} \\
     \hline
@@ -56,7 +14,7 @@
     Nov - Jan & -- AVX-512 specific sorting & -- Scale up sorting- and bitonic-merge networks to wider bit width. \newline -- Explore further possible improvements through AVX-512 specific instructions. \\
               & -- Multiway-Merging & -- Implement Multiway Merging (Explore alternatives: tournament-trees, priority-queue). \\    
               & -- Hyrise integration & -- Working sort-merge-join implementation for integer/float types on different architectures.\\ 
-              & -- Simd sorting of string types & -- Implement prefix- and hash-based key compressions (real string data from Public BI benchmark).\\ 
+              & -- SIMD sorting of string types & -- Implement prefix- and hash-based key compressions (real string data from Public BI benchmark).\\ 
     \hline
     Jan-Feb & -- Benchmarking \& Evaluation & -- Parameter tuning for different architectures. \newline 
                                                -- Compare to hash-join and old sort-merge join (Hyrise). \newline

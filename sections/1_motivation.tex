@@ -11,15 +11,15 @@ landscape. Hence, we must reconsider how we implement modern systems.
 In-memory database systems, which store data directly in the main memory rather than on disk,
 provide significantly faster data access and processing due to reduced latency.
 Therefore, they are no longer I/O bound and, need high intra-operator
-parallelism. To fully utilize the multi-core architecture and other hardware features such as cache
-locality and SIMD instructions for higher data parallelism should be considered to achieve maximum
-performance.
+parallelism. It is also crucial to use other hardware features, such as cache locality and SIMD 
+instructions, for higher data parallelism.
 
 % \subsection{Efficient Join Implementation}
-In this thesis we want to look at one common database operator: the join \cite{DBLP:conf/cloud/BlanasP13}.
+In this thesis we want to look at one common database operator: the join.
 The join operator is a fundamental component of a database system.
 In recent years, the difference in performance between the sort-merge and radix-hash join has been
-the subject of ongoing debate. Kim et al. \cite{10.14778/1687553.1687564} projected that Sort-Merge Join would outperform hash-based
+the subject of ongoing debate. Kim et al. \cite{10.14778/1687553.1687564} projected that sort-merge 
+join would outperform hash-based
 alternatives with 512-bit SIMD. Albutiu et al. \cite{MPSM} reinforced this claim with recent results reporting that
 their implementation of sort-merge join is superior to that of hash joins (without
 leveraging SIMD). Balkesen et al. \cite{Balkesen} experimentally show contradicting results by implementing 
@@ -31,9 +31,8 @@ radix-hash join is still superior.
 Despite ongoing research, public implementations of join algorithms optimized for modern hardware
 are hard to find. Most existing implementations are proprietary or 
 experimental\footnote{Implementation by Balkesen et al.: \url{https://archive-systems.ethz.ch/node/334}}, limiting their
-accessibility and usefulness to the research community and database developers. An open-source,
-state-of-the-art implementation of a sort-merge join optimized for different architectures would
-help address this need. Such an implementation serves as a valuable baseline for researchers
-looking to evaluate or improve upon existing methods, and it also contributes to advancing database
-system design by providing a solid foundation for future innovation.
-
+accessibility and usefulness to the research community and database developers. 
+An open-source, state-of-the-art implementation of a sort-merge join, optimized for different
+architectures, would help address this need. Such an implementation would serve as a valuable
+baseline for researchers looking to evaluate or improve upon existing methods. It would also
+contribute to advancing database system design by providing a solid foundation for future innovation.
