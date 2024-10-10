@@ -5,20 +5,20 @@
 
 The sort-merge join involves sorting both input relations by the join attribute. It is the most crucial and 
 time-consuming part of the sort-merge join operation. Therefore, high optimization efforts should
-be spend on this step, as it largely determines the runtime. 
+be spent on this step, as it largely determines the runtime. 
 
 We chose vectorized mergesort over vectorized quicksort because of the extensive foundational work in 
 the literature. Some SIMD quicksort implementations vectorize only the partitioning step \cite{DBLP:journals/cj/GueronK16},
 and some newer implementations also use sorting networks using AVX-512 \cite{Bramas}. They often share
-similarities then compared to mergesort, such as sorting networks. While it is interesting
-to study the differences between vectorized quicksort and merge sort, we will limit ourselves to
-mergesort due to the limited time scope.
+similarities when compared to mergesort, such as sorting networks. While studying the differences
+between vectorized quicksort and merge sort is interesting, we will limit ourselves to mergesort
+due to the limited time scope. 
 
 \subsection{SIMD Data Format}
 Before we can sort our input relations, the join attribute values need to be translated into a SIMD sortable
 format. Usually, a 64-bit pair (key, rid) is assumed. We, therefore,
 support a maximum relation size of $2^{32}$. With most value types greater
-than 32 bits, e.g. strings, we need to compress the values of the join columns. Methods like 
+than 32 bits, e.g., strings, we need to compress the values of the join columns. Methods like 
 key-prefix \cite{chris_nyberg__1994} and XOR- and shift-based hash functions \cite{1319989} have 
 been used to generate keys of 32 bits.
 

@@ -14,12 +14,13 @@ implementation is faster than the hash join implementation of Blanas et al. \cit
 Balkesen et al. \cite{Balkesen} experimentally studied the performance of sort-merge and radix-hash join.
 They claim to provide the fastest in-memory join algorithms using sorting and hashing.
 Still, they conclude that the radix-hash join exceeds the sort-merge join for 256-bit
-SIMD. They also claim that their parallel radix-hash join is the most efficient hash-join
+SIMD. They also claim their parallel radix-hash join is the most efficient hash-join
 implementation yet \cite{6544839}. The hash join operator
 implemented in Hyrise is also based on \cite{6544839} and \cite{Balkesen}. 
 
-None of the papers mentioned above take advantage of 512-bit SIMD. 
-There is research on SIMD sorting using AVX-512 \cite{Watkins, 8855628}, but to the best of our knowledge,
+None of the papers mentioned above take advantage of 512-bit SIMD and only target x86 platforms. 
+There is research on SIMD sorting using AVX-512 \cite{Watkins, 8855628}.
+However, to the best of our knowledge,
 no literature exists on implementing sort-merge join with the same optimizations and concepts like
 multiway merging for AVX-512. 
 

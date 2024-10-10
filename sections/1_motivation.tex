@@ -3,19 +3,19 @@
 
 Historically, many systems were designed for computer systems and architectures where I/O dominates
 performance. However, modern systems with multi-core architectures, larger DRAM capacities,
-advanced instruction sets, and other hardware accelerants like vector operations (SIMD), which allow us to
-perform the same operation on multiple data items simultaneously, have significantly altered this
+advanced instruction sets, and other hardware accelerants like vector operations (SIMD), which allow us 
+to simultaneously perform the same operation on multiple data items, have significantly altered this
 landscape. Hence, we must reconsider how we implement modern systems.
 
 % \subsection{Importance for Database Systems}
 In-memory database systems, which store data directly in the main memory rather than on disk,
 provide significantly faster data access and processing due to reduced latency.
-Therefore, they are no longer I/O bound and, need high intra-operator
+Therefore, they are no longer I/O bound and need high intra-operator
 parallelism. It is also crucial to use other hardware features, such as cache locality and SIMD 
 instructions, for higher data parallelism.
 
 % \subsection{Efficient Join Implementation}
-In this thesis we want to look at one common database operator: the join.
+In this thesis, we want to look at one common database operator: the join.
 The join operator is a fundamental component of a database system.
 In recent years, the difference in performance between the sort-merge and radix-hash join has been
 the subject of ongoing debate. Kim et al. \cite{10.14778/1687553.1687564} projected that sort-merge 
@@ -34,5 +34,5 @@ experimental\footnote{Implementation by Balkesen et al.: \url{https://archive-sy
 accessibility and usefulness to the research community and database developers. 
 An open-source, state-of-the-art implementation of a sort-merge join, optimized for different
 architectures, would help address this need. Such an implementation would serve as a valuable
-baseline for researchers looking to evaluate or improve upon existing methods. It would also
+baseline for researchers looking to evaluate or improve existing methods. It would also
 contribute to advancing database system design by providing a solid foundation for future innovation.
